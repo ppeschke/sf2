@@ -81,6 +81,7 @@ void Ship::run()
 		getGame()->insertObject(new hostileDrone(getGame()->getNextIndex(), NULL, _hostileDrone, projection, Vec2D(0.0f, 1.0f), this));
 	}
 	InputData* id = &getGame()->inputdata;
+
 	if(this->owner == getGame()->pc)
 	{
 		if(hitpoints <= 0)
@@ -101,81 +102,29 @@ void Ship::run()
 			if(id->right.downState || id->d.downState)
 				turnRight();
 		}
-		vel += acc;
-		vel.limit(maxSpeed);
+	}
+
+	vel += acc;
+	vel.limit(maxSpeed);
+
+	if(this->owner == getGame()->pc)
+	{
 		if(id->h.downState)	//devhax
 			vel.zero();
-		loc += vel;
-		acc.zero();  // resec accel to 0
+	}
+	loc += vel;
+	acc.zero();  // resec accel to 0
+	
+	bb->Update(loc.x - mesh->radius, loc.y + mesh->radius);
+	if(targetObj)
+		target = targetObj->loc;
+
+	if(this->owner == getGame()->pc)
+	{
 		if ((id->space.downState || id->mouse.left.downState) && weapon)
 			weapon->shoot();
-		bb->Update(loc.x - mesh->radius, loc.y + mesh->radius);
-		if(targetObj)
-			target = targetObj->loc;
 		if(id->y.downState)
 			targetObj = NULL;
-	}
-	else
-	{
-		if(hitpoints <= 0)
-		{
-			die();
-			getGame()->insertObject(new ShipExplosion(getGame()->getNextIndex(), this->loc, (int)this->mesh->radius));
-		}
-		else
-		{
-			bool shoot = false;
-			Vec2D AItarget(0.0f, 0.0f);
-			//put ship AI code here.
-			acc.zero();
-			//steering
-			if(this->mesh->type == pod)
-				AItarget = getGameType()->teams[this->owner->team].spawnpoint->loc;
-			else if(getGameType()->teams[owner->team].carryingFlag)
-			{
-				AItarget = getGameType()->teams[owner->team].carryingFlag->loc;
-				shoot = true;
-			}
-			else if(getGameType()->teams[owner->team? 0:1].flag)
-				AItarget = getGameType()->teams[owner->team? 0:1].flag->loc;
-			else if(this == getGameType()->teams[this->owner->team?0:1].carryingFlag)
-				AItarget = getGameType()->teams[this->owner->team].spawnpoint->loc;
-			diff = AItarget - loc;
-
-			if(!shoot || Distance(loc, AItarget) > sensorStrength/2)
-				diff -= vel * (vel.getMag() * mass/2);	//compensate for inherent velocity
-			float fdiff = dir.getDirection() - diff.getDirection();
-			if(fdiff < 0.0f)
-				fdiff += 6.28318f;	//add a circle to it, so it's within 0 to 2PI
-			
-			if(fdiff < theta)
-				dir = diff;				//just turn it to 
-			else if(fdiff >= 3.14159f)
-			{
-				dir.setDirection(dir.getDirection() + theta);	//turn left
-				shoot = false;
-			}
-			else
-			{
-				dir.setDirection(dir.getDirection() - theta);	//turn right
-				shoot = false;
-			}
-			dir.limit(1.0f);
-			acc.add(dir.x/mass, dir.y/mass);
-			if(fdiff > 3*3.14159f/4 && fdiff < 5*3.14159/4)
-				acc.limit(0.1f);	//turn sharper
-
-			vel += acc;
-			vel.limit(maxSpeed);
-			loc += vel;
-			bb->Update(loc.x - mesh->radius, loc.y + mesh->radius);
-			thrusting = true;
-			if(shoot && Distance(AItarget, this->loc) <= sensorStrength)
-				weapon->shoot();
-		}
-	}
-	if(owner == getGame()->pc)
-	{
 		if(!targetObj && getGame()->cursortarget)
 			target = getGame()->cursortarget->loc;
 	}
