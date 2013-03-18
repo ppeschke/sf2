@@ -1,0 +1,62 @@
+#body
+newpoly
+-0.5 3.0
+0.5 3.0
+2.0 -1.5
+-2.0 -1.5
+-0.5 3.0
+endpoly
+#left thruster
+newpoly
+-1.5 -1.5
+-1.5 -2.0
+-0.5 -2.0
+-0.5 -1.5
+endpoly
+#right thruster
+newpoly
+0.5 -1.5
+0.5 -2.0
+1.5 -2.0
+1.5 -1.5
+endpoly
+#window outline
+newpoly
+0.0 2.0
+-0.3 1.9
+-0.5 2.5
+-0.2 2.6
+0.2 2.6
+0.5 2.5
+0.3 1.9
+0.0 2.0
+endpoly
+#window inside
+newpoly
+0.0 2.0
+-0.2 2.6
+0.2 2.6
+0.0 2.0
+endpoly
+#left missile
+newpoly
+-1.17 1.0
+-1.17 1.5
+-1.335 1.75
+-1.5 1.5
+-1.5 0.0
+endpoly
+#right missile
+newpoly
+1.17 1.0
+1.17 1.5
+1.335 1.75
+1.5 1.5
+1.5 0.0
+endpoly
+mount
+thruster
+1.0 -2.3
+mount
+thruster
+-1.0 -2.3

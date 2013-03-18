@@ -1,0 +1,73 @@
+#body
+newpoly
+-0.6 3.0
+0.6 3.0
+1.4 0.0
+0.4 -0.1
+0.4 -1.0
+1.3 -2.0
+0.5 -2.5
+-0.5 -2.5
+-1.3 -2.0
+-0.4 -1.0
+-0.4 -0.1
+-1.5 0.0
+-0.6 3.0
+endpoly
+#left front window
+newpoly
+-0.2 2.6
+-0.2 0.3
+-0.9 0.3
+-0.2 2.6
+endpoly
+#right front window
+newpoly
+0.2 2.6
+0.2 0.3
+0.9 0.3
+0.2 2.6
+endpoly
+#left posterior window
+newpoly
+-0.4 -1.5
+-0.1 -1.5
+-0.1 -2.3
+-0.4 -2.3
+-0.4 -1.5
+endpoly
+#right posterior window
+newpoly
+0.4 -1.5
+0.1 -1.5
+0.1 -2.3
+0.4 -2.3
+0.4 -1.5
+endpoly
+#middle thruster stack
+newpoly
+-0.1 -2.5
+0.1 -2.5
+0.1 -3.0
+-0.1 -3.0
+-0.1 -2.5
+endpoly
+#left thruster stack
+newpoly
+-0.4 -2.5
+-0.2 -2.5
+-0.2 -2.9
+-0.4 -2.9
+-0.4 -2.5
+endpoly
+#right thruster stack
+newpoly
+0.4 -2.5
+0.2 -2.5
+0.2 -2.9
+0.4 -2.9
+0.4 -2.5
+endpoly
+mount
+thruster
+0.0 -3.2
