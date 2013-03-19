@@ -28,10 +28,10 @@ public:
 	virtual void run(float deltaTime);
 	virtual void Kill();
 	void die();
-	void slow();
-	void thrust();
-	void turnLeft();
-	void turnRight();
+	void slow(float deltaTime);
+	void thrust(float deltaTime);
+	void turnLeft(float deltaTime);
+	void turnRight(float deltaTime);
 };
 
 #endif

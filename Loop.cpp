@@ -44,13 +44,15 @@ void Loop(Game* thegame)
 						thegame->collisionDetection.UpdatePosition(thegame->objects[index]->bb, thegame->objects[index]->bb->myNode);
 				}
 			}
+			if(thegame->inputdata.h.downState)	//haxors
+			{
+				
+			}
+
 			if(thegame->sf)
 				thegame->sf->run(deltaTime / 1000.0f);
 
 			thegame->collisionDetection.Run();
-			if(thegame->inputdata.h.downState)	//haxors
-			{
-			}
 
 			thegame->reconcileObjects();
 			ProcessTimer = GetTickCount() - ProcessTimer;

@@ -167,7 +167,9 @@ Ship* GameType::RespawnShip(Vec2D loc, Vec2D dir, Vec2D vel, renderableType mT, 
 		temp = new Ship(g->getNextIndex(), g->players[playerNum], scout, loc, dir, 7.0f, 350.0f, 70, 35);
 		break;
 	case recon:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], recon, loc, dir, 6.0f, 450.0f, 50, 60);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], recon, loc, dir, 266.0f, 450.0f, 50, 60);	//this is the only one that has maxSpeed correct
+																											//all others need recalculation based on
+																											//x pixels per second
 		break;
 	case recon2:
 		temp = new Ship(g->getNextIndex(), g->players[playerNum], recon, loc, dir, 7.0f, 450.0f, 80, 40);

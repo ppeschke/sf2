@@ -11,7 +11,7 @@ class MessageQueue
 public:
 	MessageQueue();
 	MessageQueue(int x, int y, int size);
-	void addMessage(const char*, Color c);
+	void addMessage(const char*, Color c = Color());
 	void displayMessages();
 	
 	int x, y;

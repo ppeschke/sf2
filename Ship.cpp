@@ -8,6 +8,8 @@
 #include "Flag.h"
 #include "CursorTarget.h"
 #include "hostileDrone.h"
+#include <sstream>
+using namespace std;
 
 Ship::Ship(unsigned int index, Player* o, renderableType i, Vec2D location, Vec2D direction, float maxspeed, float sensor, int hp, int weight, bool collides, bool draw) : Base(index, o, location, direction, collides, draw)
 {
@@ -92,15 +94,15 @@ void Ship::run(float deltaTime)
 		else
 		{
 			if(id->up.downState || id->w.downState)
-				thrust();
+				thrust(deltaTime);
 			else
 				thrusting = false;
 			if(id->down.downState || id->s.downState || id->r.downState)
-				slow();
+				slow(deltaTime);
 			if(id->left.downState || id->a.downState)
-				turnLeft();
+				turnLeft(deltaTime);
 			if(id->right.downState || id->d.downState)
-				turnRight();
+				turnRight(deltaTime);
 		}
 	}
 
@@ -110,9 +112,14 @@ void Ship::run(float deltaTime)
 	if(this->owner == getGame()->pc)
 	{
 		if(id->h.downState)	//devhax
+		{
 			vel.zero();
+		}
 	}
-	loc += vel;
+	loc += vel * deltaTime;
+	stringstream ss;
+	ss << "Vel: " << vel.getMag();
+	getGame()->messages.addMessage(ss.str().c_str());
 	acc.zero();  // resec accel to 0
 	
 	bb->Update(loc.x - mesh->radius, loc.y + mesh->radius);
@@ -163,30 +170,24 @@ void Ship::Kill()
 	}
 }
 
-void Ship::slow()
+void Ship::slow(float deltaTime)
 {
-	vel *= (1 - (0.5f / mass));
+	vel *= 1-((1 -  (mass * 0.01f)) * deltaTime);
 }
 
-void Ship::thrust()
+void Ship::thrust(float deltaTime)
 {
-	thrusting = true;
-	acc.add(dir.x/mass, dir.y/mass);
+	thrusting = true;	//for turning on thrusters
+	acc.add(dir.x * maxSpeed/(mass/10.0f) * deltaTime, dir.y * maxSpeed/(mass/10.0f) * deltaTime);
 }
 
-void Ship::turnLeft()
+void Ship::turnLeft(float deltaTime)
 {
-	/*turn.set(-1*dir.y, dir.x);
-	turn.normalize();
-	turn.scale(turnForce);
-	dir.add(turn);
-	dir.normalize();
-	dir.scale(thrustForce);
-	*/
+	//for right now, I don't want turning to be based on time... but just in case, I have deltaTime sent to the function
 	dir.setDirection(dir.getDirection() + theta);
 }
 
-void Ship::turnRight()
+void Ship::turnRight(float deltaTime)
 {
 	dir.setDirection(dir.getDirection() - theta);
 }

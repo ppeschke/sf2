@@ -1,4 +1,4 @@
-ToDo: (+ means done)(- means not done)
+ToDo: (+ means done)(- means not done)(/ means WIP)
 
 Bug Fixes:
 + Fix particle effect rendering (slant at edges of screen)
@@ -9,7 +9,7 @@ Efficiency Issues:
 - Particle Effects
 	- move ParticleEffect objects to end of rendering chain
 	- tighten up the logic so that they don't run so many particles if time is short
-- Get everything to update based on deltaTime
+/ Get everything to update based on deltaTime
 Sound:
 - Get some good sounds
 - Get some good music
