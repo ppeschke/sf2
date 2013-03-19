@@ -427,8 +427,6 @@ void DrawBlendedParticles(Particle* p, int numParticles, Texture* t)
 	static float camy;
 	static float camz;
 
-	camx = getGame()->camera.position.x;
-	camy = getGame()->camera.position.y;
 	camz = getGame()->camera.position.z;
 
 	
@@ -442,6 +440,9 @@ void DrawBlendedParticles(Particle* p, int numParticles, Texture* t)
 	{
 		if(p[i].active)
 		{
+			camx = p[i].position.x;
+			camy = p[i].position.y;
+
 			// Before setting the world transform, do the intense mathematics!
 			// a. Calculate the Differences
 			static float difx, dify, difz;

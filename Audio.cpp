@@ -26,5 +26,5 @@ void PlayThatSound(Wave* w)
 
 void LoopSound(Wave* w)
 {
-	_Loop(L"sounds\\playing.wav");
+	//_Loop(L"sounds\\playing.wav");
 }
