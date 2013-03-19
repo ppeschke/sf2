@@ -1,5 +1,7 @@
+ToDo: (+ means done)(- means not done)
+
 Bug Fixes:
-- Fix particle effect rendering (slant at edges of screen)
++ Fix particle effect rendering (slant at edges of screen)
 - Figure out why explosions are just fuzz sound
 Sound:
 - Get some good sounds
