@@ -546,6 +546,10 @@ void drawBigText(const char* text, int x, int y, int r, int g, int b)
 //this is a heavy function and is only intended to be called once at startup
 Vec2D get3DScreenEdges(void)
 {
+	//TODO: fix this so it calls a function to get a picking ray (should remain static as the view doesn't change,
+	//stores this picking ray and uses it when the camera's z-position changes
+	//to calculate the x and y intercept with z=0. 
+	//I now possess the knowledge to do this more accurately without a loop.
 	Vec2D edge(0.0f, 0.0f);
 	D3DXVECTOR3 screenCoord = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	//will be the position of the coords in screen space
 	while(screenCoord.x < getGame()->gWindow.Width)	//while screen coord x is in window
