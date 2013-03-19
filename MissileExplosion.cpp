@@ -31,7 +31,7 @@ MissileExplosion::~MissileExplosion(void)
 		delete [] smokeParticles;
 }
 
-void MissileExplosion::run()
+void MissileExplosion::run(float deltaTime)
 {
 	for(int p = runIndex + 10; runIndex < p && runIndex < particlecount; ++runIndex)	//activate particles
 	{

@@ -12,7 +12,7 @@ public:
 	virtual ~Launcher(void);
 
 	virtual void shoot();
-	virtual void run();
+	virtual void run(float deltaTime);
 	virtual void Kill();
 
 	weaponType shootWhat;

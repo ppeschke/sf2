@@ -10,7 +10,7 @@ public:
 	virtual ~Weapon(void);
 	
 	virtual void shoot() = 0;
-	virtual void run() = 0;
+	virtual void run(float deltaTime) = 0;
 
 	unsigned int Timer;
 	unsigned int ROF;

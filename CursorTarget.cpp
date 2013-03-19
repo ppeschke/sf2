@@ -30,7 +30,7 @@ CursorTarget::~CursorTarget(void)
 {
 }
 
-void CursorTarget::run()
+void CursorTarget::run(float deltaTime)
 {
 	Game* g = getGame();
 	Vec2D sl = g->pc->ship->loc;

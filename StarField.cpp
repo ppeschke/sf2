@@ -45,7 +45,7 @@ StarField::~StarField(void)
 		delete [] nearField;
 }
 
-void StarField::run()
+void StarField::run(float deltaTime)
 {
 	Vec2D diff = getGame()->pc->ship->loc - pcLastPos;
 	pcLastPos = getGame()->pc->ship->loc;

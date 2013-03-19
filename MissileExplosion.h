@@ -9,7 +9,7 @@ public:
 	MissileExplosion(unsigned int index, Vec2D loc);
 	virtual ~MissileExplosion(void);
 
-	virtual void run();
+	virtual void run(float deltaTime);
 	virtual void Render(Vec2D* loc, Vec2D* dir);
 
 	Texture* smokeTexture;

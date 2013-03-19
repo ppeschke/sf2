@@ -12,7 +12,7 @@ public:
 	ParticleEffect(unsigned int index, Player* o, renderableType i, Vec2D location, Vec2D direction, Base* follow = NULL, bool collides = false, bool draw = true);
 	virtual ~ParticleEffect(void);
 
-	virtual void run() = 0;
+	virtual void run(float deltaTime) = 0;
 	virtual void Render(Vec2D* loc, Vec2D* dir) = 0;
 	void toggle();
 

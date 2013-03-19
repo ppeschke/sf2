@@ -11,7 +11,7 @@ public:
 	hostileDrone(unsigned int index, Player* o, renderableType mesh, Vec2D loc, Vec2D dir, Ship* chase, bool collides = false, bool draw = true);
 	virtual ~hostileDrone(void);
 
-	virtual void run();
+	virtual void run(float deltaTime);
 	virtual void Kill();
 
 	float turnForce;

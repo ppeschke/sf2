@@ -16,7 +16,7 @@ class Base
 public:
 	Base(unsigned int index, Player*, Vec2D location, Vec2D direction, bool collides = true, bool draw = true);
 	virtual ~Base(void);
-	virtual void run() = 0;
+	virtual void run(float deltaTime) = 0;
 	Mesh* CopyMesh(renderableType mT, const Color& C);
 	ParticleEffect* CopyParticleEffect(renderableType mt);
 	virtual void Kill();

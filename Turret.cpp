@@ -22,6 +22,6 @@ void Turret::shoot()
 {
 }
 
-void Turret::run()
+void Turret::run(float deltaTime)
 {
 }

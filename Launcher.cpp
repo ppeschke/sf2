@@ -52,7 +52,7 @@ void Launcher::shoot()
 	}
 }
 
-void Launcher::run()
+void Launcher::run(float deltaTime)
 {
 	Vec2D temp = coords;
 	temp.setDirection(((Ship*)follow)->dir.getDirection() - 3.14159f/2.0f + temp.getDirection());

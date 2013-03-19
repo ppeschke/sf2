@@ -18,7 +18,7 @@ SpawnPoint::~SpawnPoint(void)
 }
 
 
-void SpawnPoint::run()
+void SpawnPoint::run(float deltaTime)
 {
 	//note: spawn points should never move, ergo their bounding boxes never need to be updated.
 }

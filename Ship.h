@@ -25,7 +25,7 @@ public:
 	Vec2D target;
 	Base* targetObj;
 
-	virtual void run();
+	virtual void run(float deltaTime);
 	virtual void Kill();
 	void die();
 	void slow();

@@ -37,7 +37,7 @@ ShipExplosion::~ShipExplosion(void)
 }
 
 
-void ShipExplosion::run()
+void ShipExplosion::run(float deltaTime)
 {
 	Vec2D placement;
 	for(int p = plasmaIndex + 10; plasmaIndex < p && plasmaIndex < particlecount; ++plasmaIndex)	//activate particles

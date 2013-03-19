@@ -9,7 +9,7 @@ public:
 	ObjectiveIndicator(unsigned int index, Player* o, renderableType i, Vec2D location, Vec2D direction, bool myFlag);
 	virtual ~ObjectiveIndicator(void);
 
-	virtual void run();
+	virtual void run(float deltaTime);
 
 	bool myFlag;
 	Renderable* otherMesh;

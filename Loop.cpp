@@ -18,9 +18,14 @@ void Loop(Game* thegame)
 	DWORD FrameTimer;
 	DWORD RenderTimer;
 	DWORD ProcessTimer;
+	DWORD startingPoint = GetTickCount();
+	DWORD deltaTime;
 	//while there's not a quit message from the window and the game hasn't ended
 	while(HandleMessages() && thegame->state != over && thegame->state != quitting)
 	{
+		deltaTime = GetTickCount() - startingPoint;
+		startingPoint = GetTickCount();
+
 		FrameTimer = GetTickCount();
 		ProcessTimer = GetTickCount();
 		Input(thegame);
@@ -34,13 +39,13 @@ void Loop(Game* thegame)
 			{
 				if(thegame->objects[index] != NULL && !thegame->objects[index]->dead)
 				{
-					thegame->objects[index]->run();
+					thegame->objects[index]->run(deltaTime / 1000.0f);
 					if(thegame->objects[index]->bb)
 						thegame->collisionDetection.UpdatePosition(thegame->objects[index]->bb, thegame->objects[index]->bb->myNode);
 				}
 			}
 			if(thegame->sf)
-				thegame->sf->run();
+				thegame->sf->run(deltaTime / 1000.0f);
 
 			thegame->collisionDetection.Run();
 			if(thegame->inputdata.h.downState)	//haxors
@@ -76,14 +81,14 @@ void Loop(Game* thegame)
 			{
 				if(thegame->objects[index] != NULL && !thegame->objects[index]->dead)
 				{
-					thegame->objects[index]->run();
+					thegame->objects[index]->run(deltaTime / 1000.0f);
 					if(thegame->objects[index]->bb)
 						thegame->collisionDetection.UpdatePosition(thegame->objects[index]->bb, thegame->objects[index]->bb->myNode);
 				}
 			}
 
 			if(thegame->sf)
-				thegame->sf->run();
+				thegame->sf->run(deltaTime / 1000.0f);
 
 			thegame->collisionDetection.Run();
 

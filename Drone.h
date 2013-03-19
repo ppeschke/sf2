@@ -11,7 +11,7 @@ public:
 	Drone(unsigned int index, Player* o, renderableType mesh, Vec2D loc, Vec2D dir, bool collides = true, bool draw = true);
 	virtual ~Drone(void);
 
-	virtual void run();
+	virtual void run(float DeltaTime);
 
 	float turnForce;
 	int chaseSpeed;

@@ -24,7 +24,7 @@ Missile::~Missile(void)
 {
 }
 
-void Missile::run()
+void Missile::run(float deltaTime)
 {
 	--fuel;
 	acc.zero();

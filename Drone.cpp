@@ -35,7 +35,7 @@ Drone::~Drone(void)
 {
 }
 
-void Drone::run()
+void Drone::run(float deltaTime)
 {
 	theta += 0.05f;
 	circle.x = cos(theta) * flyAround->mesh->radius;

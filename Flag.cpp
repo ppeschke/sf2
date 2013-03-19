@@ -27,6 +27,6 @@ void Flag::Kill()
 	getGameType()->teams[teamNumber].flag = NULL;
 }
 
-void Flag::run()
+void Flag::run(float deltaTime)
 {
 }

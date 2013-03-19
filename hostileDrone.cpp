@@ -33,7 +33,7 @@ hostileDrone::~hostileDrone(void)
 {
 }
 
-void hostileDrone::run()
+void hostileDrone::run(float deltaTime)
 {
 	static bool oob = false;		//out of bounds
 

@@ -72,7 +72,7 @@ Ship::~Ship(void)
 {
 }
 
-void Ship::run() 
+void Ship::run(float deltaTime) 
 {
 	if(Distance(this->loc, Vec2D()) > getGame()->arenaRadius && GetTickCount()%100 == 0)
 	{

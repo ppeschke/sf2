@@ -10,7 +10,7 @@ public:
 	virtual ~SpawnPoint(void);
 	unsigned int teamNumber;
 
-	virtual void run();
+	virtual void run(float deltaTime);
 
 };
 

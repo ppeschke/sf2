@@ -30,7 +30,7 @@ void Thruster::Render(Vec2D* loc, Vec2D* dir)
     return;
 }
 
-void Thruster::run()
+void Thruster::run(float deltaTime)
 {
 	// calculate elapsed time
 	static DWORD starting_point = GetTickCount(), time;

@@ -18,4 +18,4 @@ Graphics:
 Gameplay:
 - Add class specializations for different ships
 Network & Multiplayer:
-- Impliment Client/Server
+- Impliment Client/Server... heh

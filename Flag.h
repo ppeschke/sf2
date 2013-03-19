@@ -10,7 +10,7 @@ public:
 	Flag(unsigned int index, renderableType i, Vec2D location, unsigned int teamNum, bool collides = true, bool draw = true);
 	virtual ~Flag(void);
 
-	virtual void run();
+	virtual void run(float deltaTime);
 	virtual void Kill();
 
 	unsigned int teamNumber;

@@ -25,7 +25,7 @@ Projectile::~Projectile(void)
 }
 
 
-void Projectile::run()
+void Projectile::run(float deltaTime)
 {
 	if(lifetime == 0)
 		Kill();

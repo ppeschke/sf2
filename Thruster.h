@@ -10,7 +10,7 @@ public:
 	virtual ~Thruster(void);
 
 	virtual void Render(Vec2D* loc, Vec2D* dir);
-	virtual void run();
+	virtual void run(float deltaTime);
 };
 
 #endif

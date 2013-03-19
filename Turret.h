@@ -10,7 +10,7 @@ public:
 	virtual ~Turret(void);
 
 	virtual void shoot();
-	virtual void run();
+	virtual void run(float deltaTime);
 };
 
 #endif
