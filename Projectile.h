@@ -11,7 +11,7 @@ public:
 
 	virtual void run(float deltaTime);
 
-	unsigned int lifetime;
+	float lifetime;
 };
 
 #endif
