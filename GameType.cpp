@@ -97,7 +97,7 @@ void GameType::OnStart(Game* thegame)
 	/*players should be settled now********************************************************************************************/
 
 	//create other stuff here
-	/*****************************************************************************PLAYER CHARACTER IS HERE!!!!!****************/
+	/*****************************************************************************PLAYER CHARACTER IS MADE BY NOW!!!!!****************/
 	thegame->ChangeShip(SpawnShip(pod, p->number));
 	p2->ship = SpawnShip(pod, p2->number);
 
@@ -156,63 +156,61 @@ Ship* GameType::RespawnShip(Vec2D loc, Vec2D dir, Vec2D vel, renderableType mT, 
 	switch(mT)
 	{
 	case pod:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], pod, loc, dir, 3.0f, 100.0f, 30, 5);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], pod, loc, dir, 132.0f, 100.0f, 30, 5);
 		break;
 	case scout:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], scout, loc, dir, 5.0f, 350.0f, 40, 40);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], scout, loc, dir, 220.0f, 350.0f, 40, 40);
 		break;
 	case scout2:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], scout, loc, dir, 6.0f, 350.0f, 50, 35);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], scout, loc, dir, 264.0f, 350.0f, 50, 35);
 		break;
 	case scout3:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], scout, loc, dir, 7.0f, 350.0f, 70, 35);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], scout, loc, dir, 308.0f, 350.0f, 70, 35);
 		break;
 	case recon:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], recon, loc, dir, 266.0f, 450.0f, 50, 60);	//this is the only one that has maxSpeed correct
-																											//all others need recalculation based on
-																											//x pixels per second
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], recon, loc, dir, 264.0f, 450.0f, 50, 60);
 		break;
 	case recon2:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], recon, loc, dir, 7.0f, 450.0f, 80, 40);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], recon, loc, dir, 308.0f, 450.0f, 80, 40);
 		break;
 	case recon3:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], recon, loc, dir, 8.0f, 450.0f, 100, 40);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], recon, loc, dir, 352.0f, 450.0f, 100, 40);
 		break;
 	case heavy:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], heavy, loc, dir, 4.0f, 450.0f, 90, 90);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], heavy, loc, dir, 176.0f, 450.0f, 90, 90);
 		break;
 	case heavy2:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], heavy, loc, dir, 4.0f, 450.0f, 120, 70);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], heavy, loc, dir, 176.0f, 450.0f, 120, 70);
 		break;
 	case heavy3:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], heavy, loc, dir, 4.0f, 450.0f, 180, 70);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], heavy, loc, dir, 176.0f, 450.0f, 180, 70);
 		break;
 	case sniper:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], sniper, loc, dir, 5.0f, 500.0f, 50, 60);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], sniper, loc, dir, 220.0f, 500.0f, 50, 60);
 		break;
 	case sniper2:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], sniper, loc, dir, 5.0f, 500.0f, 100, 60);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], sniper, loc, dir, 220.0f, 500.0f, 100, 60);
 		break;
 	case sniper3:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], sniper, loc, dir, 5.0f, 500.0f, 120, 60);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], sniper, loc, dir, 220.0f, 500.0f, 120, 60);
 		break;
 	case ewar:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], ewar, loc, dir, 4.0f, 300.0f, 80, 30);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], ewar, loc, dir, 176.0f, 300.0f, 80, 30);
 		break;
 	case ewar2:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], ewar2, loc, dir, 5.0f, 300.0f, 100, 30);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], ewar2, loc, dir, 220.0f, 300.0f, 100, 30);
 		break;
 	case ewar3:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], ewar2, loc, dir, 6.0f, 300.0f, 120, 30);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], ewar2, loc, dir, 264.0f, 300.0f, 120, 30);
 		break;
 	case logistics:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], logistics, loc, dir, 7.0f, 400.0f, 145, 45);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], logistics, loc, dir, 308.0f, 400.0f, 145, 45);
 		break;
 	case logistics2:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], logistics2, loc, dir, 7.0f, 400.0f, 240, 45);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], logistics2, loc, dir, 308.0f, 400.0f, 240, 45);
 		break;
 	case logistics3:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], logistics3, loc, dir, 7.0f, 400.0f, 330, 45);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], logistics3, loc, dir, 308.0f, 400.0f, 330, 45);
 		break;
 	default:
 		g->state = over;
@@ -220,7 +218,11 @@ Ship* GameType::RespawnShip(Vec2D loc, Vec2D dir, Vec2D vel, renderableType mT, 
 	}
 	temp->vel = vel;
 	g->insertObject(temp);
-	g->players[playerNum]->ship = temp;
+	//g->players[playerNum]->ship = temp;
+	if(g->players[playerNum] == getGame()->pc)
+		getGame()->ChangeShip(temp);	//need this for extra functions (like view zoom and targetCursor generation)
+	else
+		g->players[playerNum]->ship = temp;
 	return temp;
 }
 
@@ -231,61 +233,61 @@ Ship* GameType::SpawnShip(renderableType mT, unsigned int playerNum, Vec2D dir, 
 	switch(mT)
 	{
 	case pod:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], pod, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 3.0f, 100.0f, 30, 5);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], pod, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 132.0f, 100.0f, 30, 5);
 		break;
 	case scout:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], scout, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 5.0f, 350.0f, 40, 40);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], scout, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 220.0f, 350.0f, 40, 40);
 		break;
 	case scout2:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], scout, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 6.0f, 350.0f, 50, 35);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], scout, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 264.0f, 350.0f, 50, 35);
 		break;
 	case scout3:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], scout, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 7.0f, 350.0f, 70, 35);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], scout, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 308.0f, 350.0f, 70, 35);
 		break;
 	case recon:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], recon, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 6.0f, 450.0f, 50, 60);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], recon, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 264.0f, 450.0f, 50, 60);
 		break;
 	case recon2:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], recon, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 7.0f, 450.0f, 80, 40);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], recon, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 308.0f, 450.0f, 80, 40);
 		break;
 	case recon3:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], recon, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 8.0f, 450.0f, 100, 40);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], recon, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 352.0f, 450.0f, 100, 40);
 		break;
 	case heavy:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], heavy, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 4.0f, 450.0f, 90, 90);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], heavy, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 176.0f, 450.0f, 90, 90);
 		break;
 	case heavy2:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], heavy, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 4.0f, 450.0f, 120, 70);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], heavy, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 176.0f, 450.0f, 120, 70);
 		break;
 	case heavy3:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], heavy, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 4.0f, 450.0f, 180, 70);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], heavy, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 176.0f, 450.0f, 180, 70);
 		break;
 	case sniper:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], sniper, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 5.0f, 500.0f, 50, 60);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], sniper, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 220.0f, 500.0f, 50, 60);
 		break;
 	case sniper2:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], sniper, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 5.0f, 500.0f, 100, 60);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], sniper, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 220.0f, 500.0f, 100, 60);
 		break;
 	case sniper3:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], sniper, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 5.0f, 500.0f, 120, 60);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], sniper, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 220.0f, 500.0f, 120, 60);
 		break;
 	case ewar:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], ewar, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 4.0f, 300.0f, 80, 30);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], ewar, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 176.0f, 300.0f, 80, 30);
 		break;
 	case ewar2:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], ewar2, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 5.0f, 450.0f, 100, 30);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], ewar2, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 220.0f, 450.0f, 100, 30);
 		break;
 	case ewar3:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], ewar2, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 6.0f, 450.0f, 120, 30);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], ewar2, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 264.0f, 450.0f, 120, 30);
 		break;
 	case logistics:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], logistics, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 7.0f, 400.0f, 145, 45);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], logistics, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 308.0f, 400.0f, 145, 45);
 		break;
 	case logistics2:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], logistics2, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 7.0f, 400.0f, 240, 45);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], logistics2, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 308.0f, 400.0f, 240, 45);
 		break;
 	case logistics3:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], logistics3, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 7.0f, 400.0f, 330, 45);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], logistics3, teams[g->players[playerNum]->team].spawnpoint->loc, dir, 308.0f, 400.0f, 330, 45);
 		break;
 	default:
 		g->state = over;

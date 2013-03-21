@@ -141,15 +141,7 @@ void Ship::die()
 {
 	Ship* temp;
 	//changing owner's ship from this to new ship (pod)
-	temp = new Ship(getGame()->getNextIndex(), owner, pod, Vec2D(this->loc.x, this->loc.y), Vec2D(this->dir.x, this->dir.y), 3.0f, 100.0f, 30, 5);
-	temp->vel = this->vel;
-
-	if(owner == getGame()->pc)
-		getGame()->ChangeShip(temp);
-	else
-		owner->ship = temp;
-
-	getGame()->insertObject(temp);
+	temp = getGameType()->RespawnShip(this->loc, this->dir, this->vel, pod, this->owner->number);
 	Kill();
 }
 
