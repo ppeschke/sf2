@@ -124,8 +124,8 @@ void Render(Game* thegame)
 					//velocity
 					//Draw2DLine(thegame->objects[index]->loc.x, thegame->objects[index]->loc.y, thegame->objects[index]->loc.x + thegame->objects[index]->vel.x * 20, thegame->objects[index]->loc.y + thegame->objects[index]->vel.y * 20, D3DCOLOR_XRGB(255, 255, 0));
 
-					/*Draw2DCircle(thegame->objects[index]->loc.x, thegame->objects[index]->loc.y, 100.0f, D3DCOLOR_XRGB(255, 0, 0));	//drone control range
-					Draw2DCircle(thegame->objects[index]->loc.x, thegame->objects[index]->loc.y, 300.0f, D3DCOLOR_XRGB(150, 0, 0));	//drone outter range*/
+					//Draw2DCircle(thegame->objects[index]->loc.x, thegame->objects[index]->loc.y, 100.0f, D3DCOLOR_XRGB(255, 0, 0));	//drone control range
+					//Draw2DCircle(thegame->objects[index]->loc.x, thegame->objects[index]->loc.y, 300.0f, D3DCOLOR_XRGB(150, 0, 0));	//drone outter range
 
 					Draw2DCircle(thegame->objects[index]->loc.x, thegame->objects[index]->loc.y, thegame->objects[index]->mesh->radius, D3DCOLOR_XRGB(255, 255, 0));	//shields
 					//targeting square

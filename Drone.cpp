@@ -4,6 +4,8 @@
 #include "Ship.h"
 #include "Global.h"
 #include "Team.h"
+#include <sstream>
+using namespace std;
 
 Drone::Drone(unsigned int index, Player* o, renderableType i, Vec2D loc, Vec2D dir, bool collides, bool draw) : Base(index, o, loc, dir, collides, draw)
 {
@@ -14,8 +16,8 @@ Drone::Drone(unsigned int index, Player* o, renderableType i, Vec2D loc, Vec2D d
 		bb->Setup(loc.x - mesh->radius, loc.y + mesh->radius, mesh->radius * 2, this);
 	}
 	turnForce = 3.14159f/20.0f;
-	chaseSpeed = 9;
-	controlSpeed = 2;
+	chaseSpeed = 399;//9;
+	controlSpeed = 88;//2;
 	speedSmoother = (float)controlSpeed;
 	controlRange = 100;
 	matchRange = 300;
@@ -28,7 +30,7 @@ Drone::Drone(unsigned int index, Player* o, renderableType i, Vec2D loc, Vec2D d
 	circle.x = cos(theta) * 10;
 	circle.y = sin(theta) * 10;
 	flightTarget = &circle;
-	ROF = 100;
+	ROF = 3.0f;
 }
 
 Drone::~Drone(void)
@@ -59,41 +61,43 @@ void Drone::run(float deltaTime)
 		dir.setDirection(dir.getDirection() + turnForce);	//turn left
 	else
 		dir.setDirection(dir.getDirection() - turnForce);	//turn right
-	dir.limit(1.0f);
-	acc.add(dir.x/chaseSpeed, dir.y/chaseSpeed);	//chaseSpeed is the fasteset you'll ever go
+	dir.normalize();
+	acc.add(dir.x*chaseSpeed/5.0f, dir.y*chaseSpeed/5.0f);	//chaseSpeed is the fasteset you'll ever go
+	//(we're assuming that mass of a drone is 5, because why not?
 	if(fdiff > 3*3.14159f/4 && fdiff < 5*3.14159/4)
-		acc.limit(0.1f);	//turn sharper
+		acc.limit(4.4f);	//turn sharper
 
 	vel += acc;
 	//decide how to limit velocity
 	if(Distance(this->loc, flyAround->loc) < controlRange)	//inside controlRange
 	{
 		flightTarget = &circle;
-		controlSpeed = (int)(flyAround->vel.getMag() + 1);
+		controlSpeed = flyAround->vel.getMag() + 44.0f;	//a little faster than the target
 		if(speedSmoother > controlSpeed)
-			speedSmoother -= 0.1f;				//speed loss amount
+			speedSmoother -= 4.4f;				//speed loss amount
 		
-		if(ROF == 0 && flyAround != NULL && flyAround->hitpoints < flyAround->maxHitpoints)
+		if(ROF <= 0.0f && flyAround != NULL && flyAround->hitpoints < flyAround->maxHitpoints)
 			flyAround->hitpoints += 1;
 	}
 	else if(Distance(this->loc, flyAround->loc) < matchRange)	//inside matchRange
 	{
-		controlSpeed = (int)(flyAround->vel.getMag() + 5);	//try to slowly approach control range by flying a little faster than target (flyAround)
+		flightTarget = &circle;
+		controlSpeed = (int)(flyAround->vel.getMag() + 44.0f);	//try to slowly approach control range by flying a little faster than target (flyAround)
 		if(speedSmoother > controlSpeed)
-			speedSmoother -= 0.1f;
+			speedSmoother -= 4.4f;
 		else
-			speedSmoother += 0.1f;
+			speedSmoother += 4.4f;
 	}
 	else
 	{
 		flightTarget = &flyAround->loc;
 		if(speedSmoother < chaseSpeed)
-			speedSmoother += 0.1f;
+			speedSmoother += 44.0f;
 	}
 	vel.limit(speedSmoother);
-	loc += vel;
+	loc += vel * deltaTime;
 	bb->Update(loc.x - mesh->radius, loc.y + mesh->radius);
-	if(ROF == 0)
-		ROF = 100;
-	--ROF;
+	if(ROF <= 0)
+		ROF = 3.0f;
+	ROF -= deltaTime;
 }
