@@ -3,6 +3,7 @@
 #include "Color.h"
 #include "Particle.h"
 #include "Sprite.h"
+#include "Polygon.h"
 const double PI = 4.0*atan(1.0);
 #include <fstream>
 using namespace std;
@@ -224,6 +225,55 @@ void DrawMesh(Mesh* mesh, Vec2D* loc, Vec2D* dir)
 	}
 	//Draw2DLine(100.0f, 0.0f, loc->x, loc->y, D3DCOLOR_XRGB(0, 255, 0));
     return;
+}
+
+Mesh* CreateArena(float radius, Color color)
+{
+	Mesh* m = new Mesh();
+	const int NUMPOINTS = 24;
+    const float PI = 3.14159f;
+
+	sf2::CUSTOMVERTEX Circle[NUMPOINTS + 1];
+	float X;
+	float Y;
+	float Theta;
+	float WedgeAngle;	//Size of angle between two points on the circle (single wedge)
+
+	m->polys = new sf2::Polygon[2];
+	m->polyNum = 2;
+
+	//Precompute WedgeAngle
+	WedgeAngle = (float)((2*PI) / NUMPOINTS);
+
+	//Set up vertices for a circle
+	//Used <= in the for statement to ensure last point meets first point (closed circle)
+	for(int t = 0; t < 2; ++t)
+	{
+		for(int i=0; i <= NUMPOINTS; i++)
+		{
+			//Calculate theta for this vertex
+			Theta = i * WedgeAngle;
+		
+			//Compute X and Y locations
+			X = (float)(radius * cos(Theta));
+			Y = (float)(radius * sin(Theta));
+
+			Circle[i].X = X;
+			Circle[i].Y = Y;
+			Circle[i].Z = 0.0f;
+			Circle[i].COLOR = color.returnD3DCOLOR();
+		}
+		m->polys[t].c = color;
+		m->polys[t].length = NUMPOINTS + 1;
+		m->polys[t].vertices = new sf2::CUSTOMVERTEX[NUMPOINTS + 1];
+		//copy from circle to vertices
+		for(int i = 0; i <= NUMPOINTS; ++i)
+			m->polys[t].vertices[i] = Circle[i];
+		radius -= 5.0f;
+	}
+
+	LoadToVRAM(m);
+	return m;
 }
 
 void Draw2DCircle(float x, float y, float radius, D3DCOLOR color)

@@ -37,11 +37,11 @@ void hostileDrone::run(float deltaTime)
 {
 	static bool oob = false;		//out of bounds
 
-	if(Distance(originalLocation, loc) < 50.0f && (flyAround == NULL || Distance(Vec2D(), flyAround->loc) < getGame()->arenaRadius))
+	if(Distance(originalLocation, loc) < 50.0f && (flyAround == NULL || Distance(Vec2D(), flyAround->loc) < getGame()->arena->radius))
 		Kill();
 
 	acc.zero();
-	if(flyAround == NULL || flyAround->dead || ((Mesh*)flyAround->mesh)->type == pod || Distance(Vec2D(), flyAround->loc) < getGame()->arenaRadius)
+	if(flyAround == NULL || flyAround->dead || ((Mesh*)flyAround->mesh)->type == pod || Distance(Vec2D(), flyAround->loc) < getGame()->arena->radius)
 		flightTarget = &originalLocation;
 	else
 	{

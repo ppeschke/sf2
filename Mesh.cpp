@@ -11,6 +11,9 @@ Mesh::Mesh()
 	type = none;
 	polyNum = 0;
 	actualMounts = NULL;
+	mountLocs = NULL;
+	mountNames = NULL;
+	mountNum = 0;
 }
 
 Mesh::Mesh(const char* filename, renderableType mT, int scale)

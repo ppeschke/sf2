@@ -57,6 +57,7 @@ GameType::~GameType(void)
 
 void GameType::OnStart(Game* thegame)
 {
+	thegame->arena = new Arena(0, 800.0f);
 	teams[0].playersAllowed = 2;
 	teams[1].playersAllowed = 2;
 	/*create a player few player objects based on the stuff the server sent*/

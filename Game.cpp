@@ -24,7 +24,8 @@ Game::Game(void) : collisionDetection(1024, 3)
 	for(unsigned int i = 0; i < 10000; ++i)
 		objects[i] = NULL;
 
-	arenaRadius = 800.0f;
+	objects[0] = arena;
+	firstFreeIndex = lastIndex = 0;
 }
 
 Game::~Game(void)

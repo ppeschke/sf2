@@ -19,8 +19,8 @@ public:
 	void Import(const char*, int scale);
 
 	//YAY POINTERS!!!1!
-	sf2::Polygon* polys;	//pointer to a dynamically allocated array of pointers to polygon objects
-							//(like saying polys[4][4] but with no restriction on size)
+	sf2::Polygon* polys;	//pointer to a dynamically allocated array of polygons
+
 	unsigned int polyNum;
 	Vec2D* mountLocs;		//mount locations for things like thrusters and weapon turrets/launchers
 	string* mountNames;

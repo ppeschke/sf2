@@ -89,8 +89,9 @@ void Render(Game* thegame)
 		//ObjectTimer = GetTickCount();
 
 		//arena boundary
-		Draw2DCircle(0, 0, thegame->arenaRadius, D3DCOLOR_XRGB(255, 102, 0));
-		Draw2DCircle(0, 0, thegame->arenaRadius - 5.0f, D3DCOLOR_XRGB(255, 102, 0));
+		thegame->arena->mesh->Render(&thegame->arena->loc, &thegame->arena->dir);
+		/*Draw2DCircle(0, 0, thegame->arenaRadius, D3DCOLOR_XRGB(255, 102, 0));
+		Draw2DCircle(0, 0, thegame->arenaRadius - 5.0f, D3DCOLOR_XRGB(255, 102, 0));*/
 
 		if(thegame->sf)
 			thegame->sf->mesh->Render(&Vec2D(), &Vec2D());
@@ -265,8 +266,9 @@ void Render(Game* thegame)
 			thegame->sf->mesh->Render(&Vec2D(), &Vec2D());
 
 		//arena boundary
-		Draw2DCircle(0, 0, thegame->arenaRadius, D3DCOLOR_XRGB(255, 102, 0));
-		Draw2DCircle(0, 0, thegame->arenaRadius - 5.0f, D3DCOLOR_XRGB(255, 102, 0));
+		thegame->arena->mesh->Render(&thegame->arena->loc, &thegame->arena->dir);
+		/*Draw2DCircle(0, 0, thegame->arenaRadius, D3DCOLOR_XRGB(255, 102, 0));
+		Draw2DCircle(0, 0, thegame->arenaRadius - 5.0f, D3DCOLOR_XRGB(255, 102, 0));*/
 
 		for(unsigned int index = 0; index <= thegame->lastIndex; ++index)
 		{

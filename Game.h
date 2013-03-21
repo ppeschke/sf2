@@ -17,6 +17,7 @@ using namespace std;
 #include "_Menu.h"
 #include "InputData.h"
 #include "Wave.h"
+#include "Arena.h"
 
 enum gameState {starting, running, choosingShip, settings, paused, over, quitting};
 						//over is different from quitting, over is when the gameplay has finished and another game may now start (transition), or you may quit
@@ -64,7 +65,7 @@ public:
 	_Menu chooseShipMenu;
 	InputData inputdata;
 	Base* sf;
-	float arenaRadius;
+	Arena* arena;
 	Vec2D tempdir, temploc, tempvel;
 };
 

@@ -76,7 +76,7 @@ Ship::~Ship(void)
 
 void Ship::run(float deltaTime) 
 {
-	if(Distance(this->loc, Vec2D()) > getGame()->arenaRadius && GetTickCount()%100 == 0)
+	if(Distance(this->loc, Vec2D()) > getGame()->arena->radius && GetTickCount()%100 == 0)
 	{
 		Vec2D projection = loc;
 		projection.scale(1.5f);
@@ -117,9 +117,9 @@ void Ship::run(float deltaTime)
 		}
 	}
 	loc += vel * deltaTime;
-	stringstream ss;
+	/*stringstream ss;
 	ss << "Vel: " << vel.getMag();
-	getGame()->messages.addMessage(ss.str().c_str());
+	getGame()->messages.addMessage(ss.str().c_str());*/
 	acc.zero();  // resec accel to 0
 	
 	bb->Update(loc.x - mesh->radius, loc.y + mesh->radius);

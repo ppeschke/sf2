@@ -3,8 +3,6 @@
 
 //needed for FLOAT and DWORD
 #include <windows.h>
-#include <d3dx9.h>
-#include <d3d9.h>
 #include "Color.h"
 
 namespace sf2	//I just know that this is going to cause some problems

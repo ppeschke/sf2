@@ -66,7 +66,7 @@ Mesh* Base::CopyMesh(renderableType mT, const Color& c)
 		for(unsigned int i = 0; i < m->polyNum; ++i)
 		{
 			for(unsigned int index = 0; index < m->polys[i].length; ++index)
-				m->polys[i].vertices[index].COLOR = D3DCOLOR_XRGB((int)(c.red * 255), (int)(c.green * 255), (int)(c.blue * 255));	//set color
+				m->polys[i].vertices[index].COLOR = c.returnD3DCOLOR();	//set color
 		}
 		//load to video memory
 		LoadToVRAM(m);
