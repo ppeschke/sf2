@@ -23,9 +23,6 @@ Game::Game(void) : collisionDetection(1024, 3)
 
 	for(unsigned int i = 0; i < 10000; ++i)
 		objects[i] = NULL;
-
-	objects[0] = arena;
-	firstFreeIndex = lastIndex = 0;
 }
 
 Game::~Game(void)
@@ -38,6 +35,9 @@ Game::~Game(void)
 			delete players[i];
 	if(sf)
 		delete sf;
+
+	if(arena)
+		delete arena;
 }
 
 void Game::Setup()
