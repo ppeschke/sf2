@@ -594,97 +594,46 @@ void drawBigText(const char* text, int x, int y, int r, int g, int b)
 }
 
 //this is a heavy function and is only intended to be called once at startup
-Vec2D get3DScreenEdges(void)
+void get3DScreenEdges(Vec2D& topLeft, Vec2D& bottomRight)
 {
-	//TODO: fix this so it calls a function to get a picking ray (should remain static as the view doesn't change,
-	//stores this picking ray and uses it when the camera's z-position changes
-	//to calculate the x and y intercept with z=0. 
-	//I now possess the knowledge to do this more accurately without a loop.
-	Vec2D edge(0.0f, 0.0f);
-	D3DXVECTOR3 screenCoord = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	//will be the position of the coords in screen space
-	while(screenCoord.x < getGame()->gWindow.Width)	//while screen coord x is in window
-	{
-		edge.x += 10.0f;
-		D3DXVECTOR3 Src(edge.x, edge.y, 0.0f);
-		//camera stuff
-		D3DXMATRIX View;
-		Camera* cam = &getGame()->camera;
-		D3DXMatrixLookAtLH( &View, &D3DXVECTOR3(0.0f, 0.0f, -500.0f), &D3DXVECTOR3(0.0f, 0.0f, 0.0f), &cam->up);
+	D3DXMATRIX matProjection, matView, matWorld, matInverse;
+	d3ddev->GetTransform(D3DTS_PROJECTION, &matProjection);
+	d3ddev->GetTransform(D3DTS_VIEW, &matView);
+	d3ddev->GetTransform(D3DTS_WORLD, &matWorld);
+	
+	//bottomRight
+	float xAngle = 1.0f / matProjection(0, 0);
+	float yAngle = 1.0f / matProjection(1, 1);
 
-		//build the projection stuff
-		D3DXMATRIX Projection;
-		D3DXMatrixIdentity(&Projection);
-		float aspect = (float)getGame()->gWindow.Width/getGame()->gWindow.Height;
-		float fovy = 2.0f * atan(tan(D3DXToRadian(getGame()->gWindow.fov) * 0.5f) / (aspect));	//vertical field of view
-		//fovy = 0.4f*3.14f;
-		D3DXMatrixPerspectiveFovLH(&Projection, fovy, aspect, 1.0f, 100.0f);
+	D3DXVECTOR3 origin, direction;
+	origin = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	direction = D3DXVECTOR3(-xAngle, yAngle, 1.0f);
 
-		//and the world stuff
-		D3DXMATRIX World;
-		D3DXMatrixIdentity(&World);
-		//D3DXMatrixTranslation(&World, vec.x, vec.y, 0.0f);
-		//d3ddev->GetTransform(D3DTS_WORLD, &World);
+	//find the inverse matrix so we can run these through the pipeline backwards
+	D3DXMatrixInverse(&matInverse, NULL, &(matWorld * matView));
 
-		//with our powers combined, we form WVPtron! (the combined matrices are what it goes through to be rendered to the screen
-		D3DXMATRIX WVP;
-		WVP = World * View * Projection;
+	//convert origin and direction into model space
+	D3DXVec3TransformCoord(&origin, &origin, &matInverse);
+	D3DXVec3TransformNormal(&direction, &direction, &matInverse);
+	D3DXVec3Normalize(&direction, &direction);
 
-		//run it through the WVP transformations
-		/*D3DXVec3TransformCoord(&screenCoord, &Src, &WVP);
-		//it comes out as Screen Coords ([-1, 1], [-1, 1])
-		screenCoord.x = ((screenCoord.x + 1.0f) / 2.0f) * getGame()->gWindow.Width;		//convert from percentage of screen to pixels
-		screenCoord.y = ((-screenCoord.y + 1.0f) / 2.0f) * getGame()->gWindow.Height;*/
+	//now that we have a picking ray, find z intercept (x and y coord where Z=0)
+	bottomRight = Vec2D(origin.z*direction.x/direction.z + origin.x,   //make Z the run (as in rise over run)
+				                                origin.z*direction.y/direction.z - origin.y);
 
-		D3DVIEWPORT9 vP;
-		vP.Width = getGame()->gWindow.Width;
-		vP.Height = getGame()->gWindow.Height;
-		vP.X = vP.Y = 0;
-		vP.MaxZ = 100.0f;
-		vP.MinZ = 1.0f;
-		D3DXVec3Project(&screenCoord, &Src, &vP, &Projection, &View, &World);
-	}
 
-	while(screenCoord.y < getGame()->gWindow.Height)	//while screen coord x is in window
-	{
-		edge.y -= 10.0f;
-		D3DXVECTOR3 Src(edge.x, edge.y, 0.0f);
-		//camera stuff
-		D3DXMATRIX View;
-		Camera* cam = &getGame()->camera;
-		D3DXMatrixLookAtLH( &View, &D3DXVECTOR3(0.0f, 0.0f, cam->position.z), &D3DXVECTOR3(0.0f, 0.0f, 0.0f), &cam->up);
+	//topLeft
+	xAngle = -1.0f / matProjection(0, 0);
+	yAngle = -1.0f / matProjection(1, 1);
 
-		//build the projection stuff
-		D3DXMATRIX Projection;
-		D3DXMatrixIdentity(&Projection);
-		float aspect = (float)getGame()->gWindow.Width/getGame()->gWindow.Height;
-		float fovy = 2.0f * atan(tan(D3DXToRadian(getGame()->gWindow.fov) * 0.5f) / (aspect));	//vertical field of view
-		//fovy = 0.4f*3.14f;
-		D3DXMatrixPerspectiveFovLH(&Projection, fovy, aspect, 1.0f, 100.0f);
+	origin = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	direction = D3DXVECTOR3(-xAngle, yAngle, 1.0f);
 
-		//and the world stuff
-		D3DXMATRIX World;
-		D3DXMatrixIdentity(&World);
-		//D3DXMatrixTranslation(&World, vec.x, vec.y, 0.0f);
-		//d3ddev->GetTransform(D3DTS_WORLD, &World);
+	//convert origin and direction into model space
+	D3DXVec3TransformCoord(&origin, &origin, &matInverse);
+	D3DXVec3TransformNormal(&direction, &direction, &matInverse);
+	D3DXVec3Normalize(&direction, &direction);
 
-		//with our powers combined, we form WVPtron! (the combined matrices are what it goes through to be rendered to the screen
-		D3DXMATRIX WVP;
-		WVP = World * View * Projection;
-
-		//run it through the WVP transformations
-		/*D3DXVec3TransformCoord(&screenCoord, &Src, &WVP);
-		//it comes out as Screen Coords ([-1, 1], [-1, 1])
-		screenCoord.x = ((screenCoord.x + 1.0f) / 2.0f) * getGame()->gWindow.Width;		//convert from percentage of screen to pixels
-		screenCoord.y = ((-screenCoord.y + 1.0f) / 2.0f) * getGame()->gWindow.Height;*/
-
-		D3DVIEWPORT9 vP;
-		vP.Width = getGame()->gWindow.Width;
-		vP.Height = getGame()->gWindow.Height;
-		vP.X = vP.Y = 0;
-		vP.MaxZ = 100.0f;
-		vP.MinZ = 1.0f;
-		D3DXVec3Project(&screenCoord, &Src, &vP, &Projection, &View, &World);
-	}
-
-	return edge;
+	topLeft = Vec2D(origin.z*direction.x/direction.z + origin.x,   //make Z the run (as in rise over run)
+				                                origin.z*direction.y/direction.z - origin.y);
 }

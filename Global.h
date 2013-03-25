@@ -77,7 +77,7 @@ void EndSpriteRender();
 void DrawSprite(Sprite* s, int x, int y);
 void DrawSpriteTransparent(Sprite* s, int x, int y, int a);
 Vec2D GetScreenCoords(Vec2D vec);
-Vec2D get3DScreenEdges();
+void get3DScreenEdges(Vec2D& topLeft, Vec2D& bottomRight);
 Mesh* CreateArena(float radius, Color color);
 
 //directInput.cpp

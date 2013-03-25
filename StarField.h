@@ -13,12 +13,11 @@ public:
 	virtual void Render(Vec2D* loc, Vec2D* dir);
 
 	Vec2D pcLastPos;
+	Vec2D topLeft, bottomRight;	//keep these so that we can keep track of where the edges of the screen are
 	int midcount;
 	int nearcount;
 	Particle* midField;
 	Particle* nearField;
-
-	Vec2D edge;
 };
 
 #endif
