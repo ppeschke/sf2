@@ -593,7 +593,6 @@ void drawBigText(const char* text, int x, int y, int r, int g, int b)
 	dxbigfont->DrawTextA(NULL, text, strlen(text), &textbox, DT_LEFT | DT_TOP, D3DCOLOR_ARGB(255, r, g, b));
 }
 
-//this is a heavy function and is only intended to be called once at startup
 void get3DScreenEdges(Vec2D& topLeft, Vec2D& bottomRight)
 {
 	D3DXMATRIX matProjection, matView, matWorld, matInverse;

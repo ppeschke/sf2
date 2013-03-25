@@ -11,7 +11,7 @@ struct Camera
 	Camera()
 	{
 		targetZ = -250.0f;
-		position = D3DXVECTOR3 (0.0f, 0.0f, -450.0f);
+		position = D3DXVECTOR3 (0.0f, 0.0f, -500.0f);
 		lookat = D3DXVECTOR3 (0.0f, 0.0f, 0.0f);
 		up = D3DXVECTOR3 (0.0f, 1.0f, 0.0f);
 	}
