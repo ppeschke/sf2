@@ -5,7 +5,7 @@ Bug Fixes:
 - Figure out why explosions are just fuzz sound
 Efficiency Issues:
 + Make arena into a mesh object so that it doesn't have to load into VRam every frame
-- Fix "Vec2D Get3DScreenEdges()" (direct3D.cpp) so that it is more efficient
++ Fix "Vec2D Get3DScreenEdges()" (direct3D.cpp) so that it is more efficient
 - tighten up the ParticleEffect logic so that they don't run so many particles if time is short
 / Get everything to update based on deltaTime
 Sound:
