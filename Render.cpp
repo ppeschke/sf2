@@ -17,7 +17,7 @@ void LoadSprite(LPCWSTR filename, renderableType mt);
 void LoadGraphics(Game* thegame)
 {
 	outlog.open("RenderLog.csv");
-	outlog << "Start Render,Objects,Messages,Stuff,End Render,Frame" << endl;
+	outlog << "Start Render,Objects,Messages,UI Elements,End Render,Frame" << endl;
 	InitDirect3D(thegame);
 	//load graphics
 	LoadMesh("meshes\\drone.mesh", drone, 3);
