@@ -10,6 +10,7 @@ public:
 	virtual ~CursorTarget(void);
 
 	virtual void run(float deltaTime);
+	virtual void endStep(float deltaTime);
 
 	Vec2D relCoords;
 };

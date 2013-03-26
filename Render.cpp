@@ -77,21 +77,20 @@ void Render(Game* thegame)
 {
 	switch(thegame->state)
 	{
+	case debugHolding:
+	case debugMoving:
 	case running:
-		//DWORD StartTimer, ObjectTimer, MessageTimer, StuffTimer, EndTimer, FrameTimer;
-		//FrameTimer = GetTickCount();
-		//StartTimer = GetTickCount();
+		DWORD StartTimer, ObjectTimer, MessageTimer, StuffTimer, EndTimer, FrameTimer;
+		FrameTimer = GetTickCount();
+		StartTimer = GetTickCount();
 		
 		StartRender();
-		//DrawRect(0.0f, 0.0f, 100.0f, 100.0f, D3DCOLOR_XRGB(0xff,0xff, 0xff));
-		//StartTimer = GetTickCount() - StartTimer;
+		StartTimer = GetTickCount() - StartTimer;
 		AdjustCamera(thegame->pc->ship->loc.x, thegame->pc->ship->loc.y, thegame);
-		//ObjectTimer = GetTickCount();
+		ObjectTimer = GetTickCount();
 
 		//arena boundary
 		thegame->arena->mesh->Render(&thegame->arena->loc, &thegame->arena->dir);
-		/*Draw2DCircle(0, 0, thegame->arenaRadius, D3DCOLOR_XRGB(255, 102, 0));
-		Draw2DCircle(0, 0, thegame->arenaRadius - 5.0f, D3DCOLOR_XRGB(255, 102, 0));*/
 
 		if(thegame->sf)
 			thegame->sf->mesh->Render(&Vec2D(), &Vec2D());
@@ -115,12 +114,6 @@ void Render(Game* thegame)
 					DrawRect(thegame->objects[index]->bb->x, thegame->objects[index]->bb->y,thegame->objects[index]->bb->length, thegame->objects[index]->bb->length, D3DCOLOR_XRGB(255, 255, 255));*/
 				if(typeid(*thegame->objects[index]) == typeid(Ship))
 				{
-					//AI target stuff
-					/*if(thegame->objects[index] != thegame->pc->ship)
-					{
-						Ship* x = ((Ship*)thegame->objects[index]);
-						Draw2DLine(x->loc.x, x->loc.y, x->loc.x + x->diff.x, x->loc.y + x->diff.y, D3DCOLOR_XRGB(255, 255, 255));
-					}*/
 					//velocity
 					//Draw2DLine(thegame->objects[index]->loc.x, thegame->objects[index]->loc.y, thegame->objects[index]->loc.x + thegame->objects[index]->vel.x * 20, thegame->objects[index]->loc.y + thegame->objects[index]->vel.y * 20, D3DCOLOR_XRGB(255, 255, 0));
 
@@ -135,12 +128,14 @@ void Render(Game* thegame)
 				}
 			}
 		}
-		//ObjectTimer = GetTickCount() - ObjectTimer;
+		ObjectTimer = GetTickCount() - ObjectTimer;
+
 		//thegame->collisionDetection.Render();
-		//MessageTimer = GetTickCount();
+
+		MessageTimer = GetTickCount();
 		thegame->messages.displayMessages();
-		//MessageTimer = GetTickCount() - MessageTimer;
-		//StuffTimer = GetTickCount();
+		MessageTimer = GetTickCount() - MessageTimer;
+		StuffTimer = GetTickCount();
 
 		StartSpriteRender();
 		if(thegame->pc != NULL)
@@ -240,13 +235,13 @@ void Render(Game* thegame)
 			drawText("Speed:", thegame->gWindow.Width/2 - 185, thegame->gWindow.Height - 43, 0, 255, 255);
 		}
 
-		//StuffTimer = GetTickCount() - StuffTimer;
-		//EndTimer = GetTickCount();
+		StuffTimer = GetTickCount() - StuffTimer;
+		EndTimer = GetTickCount();
 		EndRender();
-		//EndTimer = GetTickCount() - EndTimer;
-		//FrameTimer = GetTickCount() - FrameTimer;
+		EndTimer = GetTickCount() - EndTimer;
+		FrameTimer = GetTickCount() - FrameTimer;
 
-		//outlog << StartTimer << "," << ObjectTimer << "," << MessageTimer << "," << StuffTimer << "," << EndTimer << "," << FrameTimer << endl;
+		outlog << StartTimer << "," << ObjectTimer << "," << MessageTimer << "," << StuffTimer << "," << EndTimer << "," << FrameTimer << endl;
 		break;
 	case paused:
 		//DWORD StartTimer, ObjectTimer, MessageTimer, StuffTimer, EndTimer, FrameTimer;

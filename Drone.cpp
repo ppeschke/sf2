@@ -39,6 +39,10 @@ Drone::~Drone(void)
 
 void Drone::run(float deltaTime)
 {
+}
+
+void Drone::endStep(float deltaTime)
+{
 	theta += 0.05f;
 	circle.x = cos(theta) * flyAround->mesh->radius;
 	circle.y = sin(theta) * flyAround->mesh->radius;
@@ -82,7 +86,7 @@ void Drone::run(float deltaTime)
 	else if(Distance(this->loc, flyAround->loc) < matchRange)	//inside matchRange
 	{
 		flightTarget = &circle;
-		controlSpeed = (int)(flyAround->vel.getMag() + 44.0f);	//try to slowly approach control range by flying a little faster than target (flyAround)
+		controlSpeed = flyAround->vel.getMag() + 44.0f;	//try to slowly approach control range by flying a little faster than target (flyAround)
 		if(speedSmoother > controlSpeed)
 			speedSmoother -= 4.4f;
 		else

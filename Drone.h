@@ -12,6 +12,7 @@ public:
 	virtual ~Drone(void);
 
 	virtual void run(float DeltaTime);
+	virtual void endStep(float deltaTime);
 
 	float turnForce;
 	float chaseSpeed;

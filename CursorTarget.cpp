@@ -32,6 +32,10 @@ CursorTarget::~CursorTarget(void)
 
 void CursorTarget::run(float deltaTime)
 {
+}
+
+void CursorTarget::endStep(float deltaTime)
+{
 	Game* g = getGame();
 	Vec2D sl = g->pc->ship->loc;
 	relCoords += g->inputdata.mouse.coords;

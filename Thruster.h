@@ -11,6 +11,7 @@ public:
 
 	virtual void Render(Vec2D* loc, Vec2D* dir);
 	virtual void run(float deltaTime);
+	virtual void endStep(float deltaTime);
 };
 
 #endif

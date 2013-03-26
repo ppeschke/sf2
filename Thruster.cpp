@@ -32,11 +32,11 @@ void Thruster::Render(Vec2D* loc, Vec2D* dir)
 
 void Thruster::run(float deltaTime)
 {
-	// calculate elapsed time
-	static DWORD starting_point = GetTickCount(), time;
-    time = GetTickCount() - starting_point;
-    starting_point = GetTickCount();
+}
 
+void Thruster::endStep(float deltaTime)
+{
+	//THIS FUNCTION ISN'T USING DELTATIME YET
 	if(follow)
 	{
 		Vec2D temp = coords;

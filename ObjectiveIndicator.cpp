@@ -31,6 +31,11 @@ ObjectiveIndicator::~ObjectiveIndicator(void)
 
 void ObjectiveIndicator::run(float deltaTime)
 {
+	
+}
+
+void ObjectiveIndicator::endStep(float deltaTime)
+{
 	warning = false;
 	if(getGame()->pc != NULL)
 	{

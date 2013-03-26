@@ -48,6 +48,10 @@ void Base::Kill()
 	}
 }
 
+void Base::endStep(float deltaTime)
+{
+}
+
 Mesh* Base::CopyMesh(renderableType mT, const Color& c)
 {
 	if(mT > sse || mT == none)

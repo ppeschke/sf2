@@ -8,8 +8,6 @@
 #include "Flag.h"
 #include "CursorTarget.h"
 #include "hostileDrone.h"
-#include <sstream>
-using namespace std;
 
 Ship::Ship(unsigned int index, Player* o, renderableType i, Vec2D location, Vec2D direction, float maxspeed, float sensor, int hp, int weight, bool collides, bool draw) : Base(index, o, location, direction, collides, draw)
 {
@@ -109,17 +107,14 @@ void Ship::run(float deltaTime)
 	vel += acc;
 	vel.limit(maxSpeed);
 
-	if(this->owner == getGame()->pc)
-	{
-		if(id->h.downState)	//devhax
-		{
-			vel.zero();
-		}
-	}
+	//if(this->owner == getGame()->pc)
+	//{
+	//	if(id->h.downState)	//devhax
+	//	{
+	//		vel.zero();
+	//	}
+	//}
 	loc += vel * deltaTime;
-	/*stringstream ss;
-	ss << "Vel: " << vel.getMag();
-	getGame()->messages.addMessage(ss.str().c_str());*/
 	acc.zero();  // resec accel to 0
 	
 	bb->Update(loc.x - mesh->radius, loc.y + mesh->radius);

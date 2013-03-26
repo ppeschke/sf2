@@ -595,9 +595,25 @@ void drawBigText(const char* text, int x, int y, int r, int g, int b)
 
 void get3DScreenEdges(Vec2D& topLeft, Vec2D& bottomRight)
 {
-	D3DXMATRIX matProjection, matView, matWorld, matInverse;
+	/*ADJUST CAMERA*/
+	Game* thegame = getGame();
+	//store camera position, then change it for the duration of this function
+	D3DXVECTOR3 tempCam = thegame->camera.position;
+	float tempz = thegame->camera.position.z;	//need this in case the camera is in the middle of zooming; reset to this so there are no jumps
+	thegame->camera.position = D3DXVECTOR3(0.0f, 0.0f, -500.0f);
+	thegame->camera.lookat = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+	D3DXMATRIX matView;    // the view transform matrix
+	D3DXMatrixLookAtLH(&matView,
+		&thegame->camera.position,    // the camera position
+		&thegame->camera.lookat,    // the look-at position
+		&thegame->camera.up);    // the up direction
+	d3ddev->SetTransform(D3DTS_VIEW, &matView);    // set the view transform to matView
+	/*DONE ADJUSTING CAMERA*/
+
+	D3DXMATRIX matProjection, matWorld, matInverse;
 	d3ddev->GetTransform(D3DTS_PROJECTION, &matProjection);
-	d3ddev->GetTransform(D3DTS_VIEW, &matView);
+	//d3ddev->GetTransform(D3DTS_VIEW, &matView);	//just set view to reset the camera to origin, no need to get this when we have it
 	d3ddev->GetTransform(D3DTS_WORLD, &matWorld);
 	
 	//bottomRight
@@ -635,4 +651,8 @@ void get3DScreenEdges(Vec2D& topLeft, Vec2D& bottomRight)
 
 	topLeft = Vec2D(origin.z*direction.x/direction.z + origin.x,   //make Z the run (as in rise over run)
 				                                origin.z*direction.y/direction.z - origin.y);
+
+	/*RESET CAMERA*/
+	thegame->camera.position.z = tempz;
+	AdjustCamera(tempCam.x, tempCam.y, thegame);
 }

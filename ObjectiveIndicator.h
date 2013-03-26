@@ -10,6 +10,7 @@ public:
 	virtual ~ObjectiveIndicator(void);
 
 	virtual void run(float deltaTime);
+	virtual void endStep(float deltaTime);
 
 	bool myFlag;
 	Renderable* otherMesh;

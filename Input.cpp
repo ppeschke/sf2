@@ -35,6 +35,8 @@ void Input(Game* thegame)
 	GetMouse(&Mouse);
 	switch(thegame->state)
 	{
+	case debugHolding:
+	case debugMoving:
 	case running:
 		keymacro(Keys[DIK_P], p);
 		keymacro(Keys[DIK_TAB], tab);

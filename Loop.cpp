@@ -8,13 +8,14 @@
 using namespace std;
 
 int randomNumber(int low, int high);
+string stateNames[] = {"starting", "running", "choosingShip", "settings", "paused", "over", "quitting", "debugHolding", "debugMoving"};
 //void CollisionDetection(Game* thegame);
 
 void Loop(Game* thegame)
 {
 	ofstream log;
 	log.open("frameTimes.csv");
-	log << "Process,Render,Frame" << endl;
+	log << "Process,Render,Frame, gameState" << endl;
 	DWORD FrameTimer;
 	DWORD RenderTimer;
 	DWORD ProcessTimer;
@@ -46,7 +47,18 @@ void Loop(Game* thegame)
 			}
 			if(thegame->inputdata.h.downState)	//haxors
 			{
-				
+
+			}
+
+			//the run function (called above) is for independant objects); objects that follow independant objects need the 
+			//independants to get into place before they situate themselves. Thus the endStep function (called below) is called last in the loop,
+			//forcing the independants to be settled before the objects that follow them position themselves.
+			for(unsigned int index = 0; index <= thegame->lastIndex; ++index)
+			{
+				if(thegame->objects[index] != NULL && !thegame->objects[index]->dead)
+				{
+					thegame->objects[index]->endStep(deltaTime / 1000.0f);
+				}
 			}
 
 			if(thegame->sf)
@@ -55,9 +67,12 @@ void Loop(Game* thegame)
 			thegame->collisionDetection.Run();
 
 			thegame->reconcileObjects();
-			ProcessTimer = GetTickCount() - ProcessTimer;
+
 			if(thegame->inputdata.escape.downState)
 				changeGameMode(over);
+
+			if(thegame->state != over && thegame->state != quitting)
+				;//thegame->state = debugHolding;
 			break;
 			/***********************************END RUNNING**************************************/
 		case choosingShip:
@@ -89,20 +104,36 @@ void Loop(Game* thegame)
 				}
 			}
 
+			for(unsigned int index = 0; index <= thegame->lastIndex; ++index)
+			{
+				if(thegame->objects[index] != NULL && !thegame->objects[index]->dead)
+				{
+					thegame->objects[index]->endStep(deltaTime / 1000.0f);
+				}
+			}
+
 			if(thegame->sf)
 				thegame->sf->run(deltaTime / 1000.0f);
 
 			thegame->collisionDetection.Run();
 
 			thegame->reconcileObjects();
-			ProcessTimer = GetTickCount() - ProcessTimer;
 			if(!thegame->inputdata.p.downState && !thegame->inputdata.tab.downState)
 				thegame->state = running;
 			break;
+		case debugHolding:
+			if(thegame->inputdata.h.downState)
+				thegame->state = debugMoving;
+			break;
+		case debugMoving:
+			if(!thegame->inputdata.h.downState)
+				thegame->state = running;
 		}
 
 		if(thegame->gametype != NULL && thegame->gametype->checkWin())
 			changeGameMode(over);
+		
+		ProcessTimer = GetTickCount() - ProcessTimer;
 
 		RenderTimer = GetTickCount();
 		Render(thegame);
@@ -112,7 +143,8 @@ void Loop(Game* thegame)
 
 		log << ProcessTimer;
 		log << "," << RenderTimer;
-		log << "," << FrameTimer << endl;
+		log << "," << FrameTimer << ",";
+		log << stateNames[thegame->state] << endl;
 	}
 	thegame->state = over;
 	log.close();

@@ -20,6 +20,7 @@ public:
 	Mesh* CopyMesh(renderableType mT, const Color& C);
 	ParticleEffect* CopyParticleEffect(renderableType mt);
 	virtual void Kill();
+	virtual void endStep(float deltaTime);	//this function is for things that follow other things and must update their position after those other things
 
 	Player* owner;
 	Renderable* mesh;

@@ -19,7 +19,7 @@ using namespace std;
 #include "Wave.h"
 #include "Arena.h"
 
-enum gameState {starting, running, choosingShip, settings, paused, over, quitting};
+enum gameState {starting, running, choosingShip, settings, paused, over, quitting, debugHolding, debugMoving};
 						//over is different from quitting, over is when the gameplay has finished and another game may now start (transition), or you may quit
 enum gameType {ctf, ffa};
 
