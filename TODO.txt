@@ -2,7 +2,7 @@ ToDo: (+ means done)(- means not done)(/ means WIP)
 
 Bug Fixes:
 + Fix flickering (of particle effects, cursorTarget, and ObjectiveIndicators)
-- Fid out why rendering and processing takes longer sometimes
+- Find out why rendering and processing takes longer sometimes
 + fix collisions now that things move based on deltaTime
 + Fix particle effect rendering (slant at edges of screen)
 - Figure out why explosions are just fuzz sound
