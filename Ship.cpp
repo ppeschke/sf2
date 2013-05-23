@@ -44,17 +44,17 @@ Ship::Ship(unsigned int index, Player* o, renderableType i, Vec2D location, Vec2
 	{
 		if(m->mountNames[i] == "missile")
 		{
-			p = new Launcher(getGame()->getNextIndex(), owner, none, this, m->mountLocs[i], Vec2D(), 10, shootMissile);
+			p = new Launcher(getGame()->getNextIndex(), owner, none, this, m->mountLocs[i], Vec2D(), 1.0f, shootMissile);
 			handledHere = true;
 		}
 		else if(m->mountNames[i] == "projectile")
 		{
-			p = new Launcher(getGame()->getNextIndex(), owner, none, this, m->mountLocs[i], Vec2D(), 10, shootProjectile);
+			p = new Launcher(getGame()->getNextIndex(), owner, none, this, m->mountLocs[i], Vec2D(), 1.0f, shootProjectile);
 			handledHere = true;
 		}
 		else if(m->mountNames[i] == "drone")
 		{
-			p = new Launcher(getGame()->getNextIndex(), owner, none, this, m->mountLocs[i], Vec2D(), 10, shootDrone);
+			p = new Launcher(getGame()->getNextIndex(), owner, none, this, m->mountLocs[i], Vec2D(), 1.0f, shootDrone);
 			handledHere = true;
 		}
 		if(handledHere)
@@ -92,9 +92,15 @@ void Ship::run(float deltaTime)
 		else
 		{
 			if(id->up.downState || id->w.downState)
+			{
+				thrusting = true;	//for turning on thruster particle effects
 				thrust(deltaTime);
+			}
 			else
+			{
 				thrusting = false;
+				acc.zero();  // resec accel to 0
+			}
 			if(id->down.downState || id->s.downState || id->r.downState)
 				slow(deltaTime);
 			if(id->left.downState || id->a.downState)
@@ -115,7 +121,6 @@ void Ship::run(float deltaTime)
 	//	}
 	//}
 	loc += vel * deltaTime;
-	acc.zero();  // resec accel to 0
 	
 	bb->Update(loc.x - mesh->radius, loc.y + mesh->radius);
 	if(targetObj)
@@ -164,8 +169,7 @@ void Ship::slow(float deltaTime)
 
 void Ship::thrust(float deltaTime)
 {
-	thrusting = true;	//for turning on thrusters
-	acc.add(dir.x * maxSpeed/(mass/10.0f) * deltaTime, dir.y * maxSpeed/(mass/10.0f) * deltaTime);
+	acc.set(dir.x * maxSpeed/(mass/10.0f) * deltaTime, dir.y * maxSpeed/(mass/10.0f) * deltaTime);
 }
 
 void Ship::turnLeft(float deltaTime)

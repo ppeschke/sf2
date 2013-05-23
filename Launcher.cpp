@@ -7,7 +7,7 @@
 #include "Player.h"
 #include "CursorTarget.h"
 
-Launcher::Launcher(unsigned int index, Player* o, renderableType mesh, Base* follow, Vec2D loc, Vec2D dir, unsigned int Rof, weaponType wT, bool collides, bool draw) : Weapon(index, o, follow, loc, dir, Rof, collides, draw)
+Launcher::Launcher(unsigned int index, Player* o, renderableType mesh, Base* follow, Vec2D loc, Vec2D dir, float Rof, weaponType wT, bool collides, bool draw) : Weapon(index, o, follow, loc, dir, Rof, collides, draw)
 {
 	//launchers don't have meshhhesss or bounding boxesss does they preciouss?
 	if(this->owner == getGame()->pc && getGame()->pc->ship)
@@ -28,7 +28,7 @@ void Launcher::Kill()
 
 void Launcher::shoot()
 {
-	if(Timer == 0)
+	if(Timer <= 0.0f)
 	{
 		Timer = ROF;
 		Base* temp;
@@ -53,11 +53,15 @@ void Launcher::shoot()
 }
 
 void Launcher::run(float deltaTime)
+{	
+}
+
+void Launcher::endStep(float deltaTime)
 {
 	Vec2D temp = coords;
 	temp.setDirection(((Ship*)follow)->dir.getDirection() - 3.14159f/2.0f + temp.getDirection());
 	this->loc = ((Ship*)follow)->loc + temp;
 	this->dir = ((Ship*)follow)->dir;
-	if(Timer > 0)
-		--Timer;
+	if(Timer > 0.0f)
+		Timer -= deltaTime;
 }

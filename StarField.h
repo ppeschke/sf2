@@ -10,6 +10,7 @@ public:
 	virtual ~StarField(void);
 
 	virtual void run(float deltaTime);
+	virtual void endStep(float deltaTime);
 	virtual void Render(Vec2D* loc, Vec2D* dir);
 
 	Vec2D pcLastPos;

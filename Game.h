@@ -67,6 +67,7 @@ public:
 	Base* sf;
 	Arena* arena;
 	Vec2D tempdir, temploc, tempvel;
+	DWORD deltaTime;
 };
 
 #endif

@@ -35,12 +35,16 @@ hostileDrone::~hostileDrone(void)
 
 void hostileDrone::run(float deltaTime)
 {
+}
+
+void hostileDrone::endStep(float deltaTime)
+{
 	static bool oob = false;		//out of bounds
 
 	if(Distance(originalLocation, loc) < 50.0f && (flyAround == NULL || Distance(Vec2D(), flyAround->loc) < getGame()->arena->radius))
 		Kill();
 
-	acc.zero();
+	//acc.zero();	//not needed because of acc.set
 	if(flyAround == NULL || flyAround->dead || ((Mesh*)flyAround->mesh)->type == pod || Distance(Vec2D(), flyAround->loc) < getGame()->arena->radius)
 		flightTarget = &originalLocation;
 	else
@@ -60,9 +64,9 @@ void hostileDrone::run(float deltaTime)
 	else
 		dir.setDirection(dir.getDirection() - turnForce);	//turn right
 	dir.limit(1.0f);
-	acc.add(dir.x/chaseSpeed, dir.y/chaseSpeed);	//chaseSpeed is the fasteset you'll ever go
+	acc.set(dir.x*chaseSpeed/5.0f * deltaTime, dir.y*chaseSpeed/5.0f * deltaTime);	//chaseSpeed is the fasteset you'll ever go
 	if(fdiff > 3*3.14159f/4 && fdiff < 5*3.14159/4)
-		acc.limit(0.1f);	//turn sharper
+		acc.limit(0.1f * deltaTime);	//turn sharper
 
 	vel += acc;
 	//decide how to limit velocity

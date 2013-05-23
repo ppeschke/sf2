@@ -12,12 +12,14 @@ Missile::Missile(unsigned int index, Player* o, renderableType i, Vec2D loc, Vec
 		bb = new BoundingBox;
 		bb->Setup(loc.x - mesh->radius, loc.y + mesh->radius, mesh->radius * 2, this);
 	}
-	speed = 10;
+	maxSpeed = 320;
 	turnForce = 3.14159f/20.0f;
-	fuel = 500;
+	fuel = 10.0f;
 	vel = o->ship->vel;
 	mass = 5;
 	spent = false;
+	thrustForce = 1165.0f;
+	lifeTime = 10.0f;
 }
 
 Missile::~Missile(void)
@@ -26,9 +28,9 @@ Missile::~Missile(void)
 
 void Missile::run(float deltaTime)
 {
-	--fuel;
+	fuel -= deltaTime;
 	acc.zero();
-	if(!owner->ship->weapon)
+	if(!owner->ship->weapon)	//owner's ship blew up!
 		spent = true;	//still has fuel, technically, but won't reaquire, and won't follow anything
 						//will still be able to trace whose it was (owner) if it happens to hit something
 	if(fuel > 0 && !spent)
@@ -45,12 +47,17 @@ void Missile::run(float deltaTime)
 		else
 			dir.setDirection(dir.getDirection() - turnForce);	//turn right
 		dir.limit(1.0f);
-		acc.add(dir.x/mass, dir.y/mass);
+		acc.set(dir.x*thrustForce/mass * deltaTime, dir.y*thrustForce/mass * deltaTime);
 		if(fdiff > 3*3.14159f/4 && fdiff < 5*3.14159/4)
-			acc.limit(0.1f);	//turn sharper
+			acc.limit(0.1f * deltaTime);	//turn sharper
 	}
+	else
+		lifeTime -= deltaTime;
 	vel += acc;
-	vel.limit(speed);
-	loc += vel;
+	vel.limit(maxSpeed);
+	loc += vel * deltaTime;
 	bb->Update(loc.x - mesh->radius, loc.y + mesh->radius);
+
+	if(lifeTime <= 0.0f)
+		Kill();
 }

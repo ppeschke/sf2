@@ -1,0 +1,1 @@
+-set target to pod after pod explodes (should set it to cursorTarget)

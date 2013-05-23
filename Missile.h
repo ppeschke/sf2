@@ -11,9 +11,12 @@ public:
 
 	virtual void run(float deltaTime);
 
-	float speed;
+	float thrustForce;
+	float maxSpeed;
 	float turnForce;
-	int fuel;
+	float fuel;
+	float lifeTime;	//this lifetime only starts after the fuel runs out and is a measure to keep deep space from being crowded
+					//with unexploded missiles
 	int mass;
 	bool spent;
 };

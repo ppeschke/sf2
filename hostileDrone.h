@@ -12,6 +12,7 @@ public:
 	virtual ~hostileDrone(void);
 
 	virtual void run(float deltaTime);
+	virtual void endStep(float deltaTime);
 	virtual void Kill();
 
 	float turnForce;

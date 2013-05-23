@@ -14,7 +14,7 @@
 #include "Game.h"
 
 class Sprite;
-class Sound;
+//class Sound;
 struct XAUDIO2_BUFFER;
 
 //WinMain.cpp

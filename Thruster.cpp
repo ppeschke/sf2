@@ -36,7 +36,6 @@ void Thruster::run(float deltaTime)
 
 void Thruster::endStep(float deltaTime)
 {
-	//THIS FUNCTION ISN'T USING DELTATIME YET
 	if(follow)
 	{
 		Vec2D temp = coords;

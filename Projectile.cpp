@@ -27,7 +27,7 @@ Projectile::~Projectile(void)
 
 void Projectile::run(float deltaTime)
 {
-	if(lifetime <= 0)
+	if(lifetime <= 0.0f)
 		Kill();
 	this->loc += this->vel * deltaTime;
 	bb->Update(loc.x - mesh->radius, loc.y + mesh->radius);

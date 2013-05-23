@@ -309,9 +309,12 @@ void GameType::onCollision(Base* a, Base* b)
 		return;
 	if(typeid((*a)) == typeid(Ship) && typeid((*b)) == typeid(Ship))
 	{
-		//reverse the last step so they're not colliding anymore
-		a->loc -= a->vel;
-		b->loc -= b->vel;
+		//reverse the last step (or two if necessary) so they're not colliding anymore
+		while(Distance(a->loc, b->loc) <= a->mesh->radius + b->mesh->radius)
+		{
+			a->loc -= a->vel * getGame()->deltaTime/1000.0f;
+			b->loc -= b->vel * getGame()->deltaTime/1000.0f;
+		}
 
 		float cor = 0.7f;
 		Vec2D rVelA, rVelB;
@@ -341,9 +344,6 @@ void GameType::onCollision(Base* a, Base* b)
 	}
 	else if(typeid(*a) == typeid(Missile) && typeid(*b) == typeid(Ship) || typeid(*a) == typeid(Ship) && typeid(*b) == typeid(Missile))
 	{
-		//reverse the last step so they're not colliding anymore
-		//a->loc -= a->vel;
-		//b->loc -= b->vel;
 		if(typeid(*a) == typeid(Missile))
 		{
 			Base* temp = a;
@@ -366,9 +366,6 @@ void GameType::onCollision(Base* a, Base* b)
 	}
 	else if(typeid(*a) == typeid(Projectile) && typeid(*b) == typeid(Ship) || typeid(*a) == typeid(Ship) && typeid(*b) == typeid(Projectile))
 	{
-		//reverse the last step so they're not colliding anymore
-		//a->loc -= a->vel;
-		//b->loc -= b->vel;
 		if(typeid(*a) == typeid(Projectile))
 		{
 			Base* temp = a;

@@ -22,7 +22,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//SplashScreen(&thegame);
 	thegame.Setup();
 
-	//thegame->gameType->OnStart(&thegame); was moved to StartGame()
+	//thegame->gameType->OnStart(&thegame); was moved to StartGame() which is called by the button you press to select a gametype
 	LoopSound(NULL);
 	Loop(&thegame);
 

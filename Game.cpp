@@ -23,6 +23,7 @@ Game::Game(void) : collisionDetection(1024, 3)
 
 	for(unsigned int i = 0; i < 10000; ++i)
 		objects[i] = NULL;
+	deltaTime = 0.0f;
 }
 
 Game::~Game(void)

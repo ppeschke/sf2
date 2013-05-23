@@ -49,7 +49,7 @@ void Drone::endStep(float deltaTime)
 
 	circle += flyAround->loc;
 
-	acc.zero();
+	//acc.zero();	//not needed because of acc.set
 	if(owner->ship->targetObj != NULL)
 		flyAround = (Ship*)(owner->ship->targetObj);
 	else
@@ -66,10 +66,10 @@ void Drone::endStep(float deltaTime)
 	else
 		dir.setDirection(dir.getDirection() - turnForce);	//turn right
 	dir.normalize();
-	acc.add(dir.x*chaseSpeed/5.0f, dir.y*chaseSpeed/5.0f);	//chaseSpeed is the fasteset you'll ever go
+	acc.set(dir.x*chaseSpeed/5.0f * deltaTime, dir.y*chaseSpeed/5.0f * deltaTime);	//chaseSpeed is the fasteset you'll ever go
 	//(we're assuming that mass of a drone is 5, because why not?
 	if(fdiff > 3*3.14159f/4 && fdiff < 5*3.14159/4)
-		acc.limit(4.4f);	//turn sharper
+		acc.limit(4.4f * deltaTime);	//turn sharper
 
 	vel += acc;
 	//decide how to limit velocity

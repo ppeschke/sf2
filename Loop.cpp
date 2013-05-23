@@ -28,6 +28,7 @@ void Loop(Game* thegame)
 	{
 		deltaTime = GetTickCount() - startingPoint;
 		startingPoint = GetTickCount();
+		thegame->deltaTime = deltaTime;
 
 		FrameTimer = GetTickCount();
 		ProcessTimer = GetTickCount();
@@ -77,7 +78,7 @@ void Loop(Game* thegame)
 			}
 
 			if(thegame->sf)
-				thegame->sf->run(deltaTime / 1000.0f);
+				thegame->sf->endStep(deltaTime / 1000.0f);
 
 			endStepTimer = GetTickCount() - endStepTimer;
 
@@ -134,7 +135,7 @@ void Loop(Game* thegame)
 			}
 
 			if(thegame->sf)
-				thegame->sf->run(deltaTime / 1000.0f);
+				thegame->sf->endStep(deltaTime / 1000.0f);
 
 			thegame->collisionDetection.Run();
 

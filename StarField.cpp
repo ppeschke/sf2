@@ -47,6 +47,10 @@ StarField::~StarField(void)
 
 void StarField::run(float deltaTime)
 {
+}
+
+void StarField::endStep(float deltaTime)
+{
 	Vec2D dimensions(bottomRight.x - topLeft.x, topLeft.y - bottomRight.y);
 	Vec2D diff = getGame()->pc->ship->loc - pcLastPos;
 	pcLastPos = getGame()->pc->ship->loc;
