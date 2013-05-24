@@ -8,7 +8,7 @@ const double PI = 4.0*atan(1.0);
 #include <fstream>
 using namespace std;
 
-ofstream d3dlog;
+//ofstream d3dlog;
 
 LPDIRECT3D9 d3d = NULL;
 LPDIRECT3DDEVICE9 d3ddev = NULL;
@@ -38,8 +38,8 @@ struct TEXTUREVERTEX
 
 void InitDirect3D(Game* thegame)
 {
-	d3dlog.open("d3d.csv");
-	d3dlog << "End Process,Present,Total" << endl;
+	/*d3dlog.open("d3d.csv");
+	d3dlog << "End Process,Present,Total" << endl;*/
 
     d3d = Direct3DCreate9(D3D_SDK_VERSION);
 
@@ -84,7 +84,7 @@ void InitDirect3D(Game* thegame)
 
 void CloseDirect3D()
 {
-	d3dlog.close();
+	//d3dlog.close();
 	d3ddev->Release();
     d3d->Release();
     return;

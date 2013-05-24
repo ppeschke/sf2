@@ -35,9 +35,12 @@ void DebugTools::Output()
 {
 	ofstream log("debuglog.csv");
 	log << frameCount << " frames recorded" << endl;
+	bool force = false;
 	for(vector<_Process*>::iterator index = frames.begin(); index != frames.end(); ++index)
 	{
-		(*index)->Output(log, level);
+		if((*index)->BreaksThreshold() || this->level == all)
+			force = true;
+		(*index)->Output(log, level, force);
 	}
 	
 	log.close();

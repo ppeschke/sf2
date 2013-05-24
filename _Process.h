@@ -4,7 +4,7 @@
 #include <vector>
 #include <fstream>
 #include <string>
-#include <Windows.h>
+#include <windows.h>
 using namespace std;
 
 enum debugLevel {all, warning};
@@ -15,7 +15,8 @@ public:
 	_Process(_Process* _parent, string _name, DWORD _threshold);
 	~_Process(void);
 
-	void Output(ofstream& stream, debugLevel dl, unsigned int level = 0U);
+	void Output(ofstream& stream, debugLevel dl, unsigned int level = 0U, bool force = false);	//0U is: 0 unsigned int
+	bool BreaksThreshold();
 
 	_Process* parent;
 	string name;

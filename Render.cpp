@@ -16,8 +16,8 @@ void LoadSprite(LPCWSTR filename, renderableType mt);
 
 void LoadGraphics(Game* thegame)
 {
-	outlog.open("RenderLog.csv");
-	outlog << "Start Render,Objects,Messages,UI Elements,End Render,Frame" << endl;
+	/*outlog.open("RenderLog.csv");
+	outlog << "Start Render,Objects,Messages,UI Elements,End Render,Frame" << endl;*/
 	InitDirect3D(thegame);
 	//load graphics
 	LoadMesh("meshes\\drone.mesh", drone, 3);
@@ -80,14 +80,14 @@ void Render(Game* thegame)
 	case debugHolding:
 	case debugMoving:
 	case running:
-		DWORD StartTimer, ObjectTimer, MessageTimer, StuffTimer, EndTimer, FrameTimer;
+		/*DWORD StartTimer, ObjectTimer, MessageTimer, StuffTimer, EndTimer, FrameTimer;
 		FrameTimer = GetTickCount();
-		StartTimer = GetTickCount();
-		
+		StartTimer = GetTickCount();*/
+		thegame->debug.EnterSubProcess("Render", 17);
 		StartRender();
-		StartTimer = GetTickCount() - StartTimer;
+		//StartTimer = GetTickCount() - StartTimer;
 		AdjustCamera(thegame->pc->ship->loc.x, thegame->pc->ship->loc.y, thegame);
-		ObjectTimer = GetTickCount();
+		//ObjectTimer = GetTickCount();
 
 		//arena boundary
 		thegame->arena->mesh->Render(&thegame->arena->loc, &thegame->arena->dir);
@@ -128,14 +128,14 @@ void Render(Game* thegame)
 				}
 			}
 		}
-		ObjectTimer = GetTickCount() - ObjectTimer;
+		//ObjectTimer = GetTickCount() - ObjectTimer;
 
 		//thegame->collisionDetection.Render();
 
-		MessageTimer = GetTickCount();
+		//MessageTimer = GetTickCount();
 		thegame->messages.displayMessages();
-		MessageTimer = GetTickCount() - MessageTimer;
-		StuffTimer = GetTickCount();
+		//MessageTimer = GetTickCount() - MessageTimer;
+		//StuffTimer = GetTickCount();
 
 		StartSpriteRender();
 		if(thegame->pc != NULL)
@@ -235,13 +235,14 @@ void Render(Game* thegame)
 			drawText("Speed:", thegame->gWindow.Width/2 - 185, thegame->gWindow.Height - 43, 0, 255, 255);
 		}
 
-		StuffTimer = GetTickCount() - StuffTimer;
-		EndTimer = GetTickCount();
+		/*StuffTimer = GetTickCount() - StuffTimer;
+		EndTimer = GetTickCount();*/
 		EndRender();
-		EndTimer = GetTickCount() - EndTimer;
-		FrameTimer = GetTickCount() - FrameTimer;
+		/*EndTimer = GetTickCount() - EndTimer;
+		FrameTimer = GetTickCount() - FrameTimer;*/
 
-		outlog << StartTimer << "," << ObjectTimer << "," << MessageTimer << "," << StuffTimer << "," << EndTimer << "," << FrameTimer << endl;
+		//outlog << StartTimer << "," << ObjectTimer << "," << MessageTimer << "," << StuffTimer << "," << EndTimer << "," << FrameTimer << endl;
+		thegame->debug.ExitSubProcess();
 		break;
 	case paused:
 		//DWORD StartTimer, ObjectTimer, MessageTimer, StuffTimer, EndTimer, FrameTimer;
@@ -463,5 +464,5 @@ void UnloadGraphics(Game* thegame)
 		delete (*index);
 	}
 	thegame->renderables.clear();
-	outlog.close();
+	//outlog.close();
 }

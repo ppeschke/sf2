@@ -6,7 +6,7 @@
 #include "Ship.h"
 #include "Launcher.h"
 
-Game::Game(void) : collisionDetection(1024, 3)
+Game::Game(void) : collisionDetection(1024, 3), debug(33, warning)
 {
 	state = starting;
 	messages.x = 5;
@@ -23,7 +23,7 @@ Game::Game(void) : collisionDetection(1024, 3)
 
 	for(unsigned int i = 0; i < 10000; ++i)
 		objects[i] = NULL;
-	deltaTime = 0.0f;
+	deltaTime = 0;
 }
 
 Game::~Game(void)

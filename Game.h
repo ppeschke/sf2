@@ -18,6 +18,7 @@ using namespace std;
 #include "InputData.h"
 #include "Wave.h"
 #include "Arena.h"
+#include "DebugTools.h"
 
 enum gameState {starting, running, choosingShip, settings, paused, over, quitting, debugHolding, debugMoving};
 						//over is different from quitting, over is when the gameplay has finished and another game may now start (transition), or you may quit
@@ -68,6 +69,7 @@ public:
 	Arena* arena;
 	Vec2D tempdir, temploc, tempvel;
 	DWORD deltaTime;
+	DebugTools debug;
 };
 
 #endif
