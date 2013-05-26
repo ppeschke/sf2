@@ -28,6 +28,10 @@ public:
 	debugLevel level;
 	unsigned int frameCount;
 	unsigned int threshold;
+
+private:
+	void outputHeader(ofstream&);
+	void outputFooter(ofstream&);
 };
 
 #endif

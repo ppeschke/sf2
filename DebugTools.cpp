@@ -33,7 +33,8 @@ void DebugTools::SelectDebugLevel(debugLevel dl)
 
 void DebugTools::Output()
 {
-	ofstream log("debuglog.csv");
+	ofstream log("frames.js");
+	outputHeader(log);
 	log << frameCount << " frames recorded" << endl;
 	bool force = false;
 	for(vector<_Process*>::iterator index = frames.begin(); index != frames.end(); ++index)
@@ -41,8 +42,9 @@ void DebugTools::Output()
 		if((*index)->BreaksThreshold() || this->level == all)
 			force = true;
 		(*index)->Output(log, level, force);
+		force = false;
 	}
-	
+	outputFooter(log);
 	log.close();
 }
 
@@ -86,4 +88,13 @@ void DebugTools::EndFrame()
 	}
 	current->timer = GetTickCount() - current->timer;
 	++frameCount;
+}
+
+void DebugTools::outputHeader(ofstream& log)
+{
+	log << "";
+}
+
+void DebugTools::outputFooter(ofstream& log)
+{
 }
