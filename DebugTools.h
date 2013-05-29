@@ -6,6 +6,7 @@
 #include <vector>
 using namespace std;
 #include "_Process.h"
+#include "DebugEvent.h"
 
 class DebugTools
 {
@@ -21,17 +22,16 @@ public:
 	void Output();
 	void CleanupProcess(_Process* p);
 	void CleanupChildren(_Process* p);
+	bool FrameHasEvent(int frameNumber);
+	void AddEvent(string name);
 
 	_Process* current;
 	vector<_Process*> frames;
+	vector<DebugEvent*> events;
 
 	debugLevel level;
 	unsigned int frameCount;
 	unsigned int threshold;
-
-private:
-	void outputHeader(ofstream&);
-	void outputFooter(ofstream&);
 };
 
 #endif

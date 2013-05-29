@@ -26,6 +26,8 @@ div>div
 {
 	clear:both;
 	height:25px;
+	display:block;
+	float:none;
 }
 p
 {
@@ -68,7 +70,7 @@ function FillFrames(width)
 		+ "<p style=\"width:" + (Processes[i].millis * width) + "px;\">"
 		+ Processes[i].name + ": " + Processes[i].millis + "ms</p></div>"
 		if(Processes[i].parent == "framescontainer")
-		p.innerHTML += "<div class=\"clearboth\"></div>";
+		p.innerHTML += "<div class=\"clearboth\">-----</div>";
 	}
 }
 </script>
@@ -77,28 +79,11 @@ function FillFrames(width)
 <body onload="FillFrames(10);">
 <h1>SF2 Debug Log</h1>
 <form>
-<label for="msw">Millisecond Width: </label><input type="text" id="msw" name="msw">
+<label for="msw">Millisecond Width: </label><input size="4" type="text" id="msw" name="msw"> px
 <input type="button" value="Submit" onclick="FillFrames(msw.value);">
 </form>
+<br>
 <div id="framescontainer">
-<!--
-<div class="frame" id="14">
-<p style="width:310px;background-color:#fff;">Frame 14 31ms</p>
-	<div><p style="width:170px;background-color:#eee;">Process: 17ms</p>
-		<div><p style="width:40px;background-color:#ddd;">Run: 4ms</p></div>
-		<div><p style="width:70px;background-color:#ddc;">EndStep: 7ms</p></div>
-		<div><p style="width:0px;background-color:#ddb;">Collision: 0ms</p></div>
-		<div><p style="width:60px;background-color:#dda;">Reconcile: 6ms</p></div>
-	</div>
-
-	<div style="width:150px;background-color:#eed;"><p>Render: 15ms</p>
-		<div><p style="width:140px;background-color:#ddd;">DrawObjects: 14ms</p></div>
-	</div>
-</div>
-<div class="clearboth"></div>
--->
-
-
 </div>
 </body>
 </html>

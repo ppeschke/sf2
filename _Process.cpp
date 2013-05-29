@@ -12,24 +12,23 @@ _Process::~_Process(void)
 {
 }
 
-void _Process::Output(ofstream& out, debugLevel dl, unsigned int level, bool force)
+void _Process::Output(ofstream& out, string parent, debugLevel dl, unsigned int level, bool force)
 {
 	if(timer > threshold)
 		force = true;
 	if(dl == all || force)
 	{
-		for(unsigned int i = 0; i < level; ++i)
-			out << ",";
-		out << name << endl;
-		for(unsigned int i = 0; i < level; ++i)
-			out << ",";
-		out << timer << "ms" << endl;
+		//full name, name, parent, ms, topLevel
+		//Processes.push(new Process("Frame 14", "Frame 14", "framescontainer", 31, true));
+		//Processes.push(new Process("Frame 14 Render Draw Objects", "Draw Objects", "Frame 14 Render", 14, false));
+		out << "Processes.push(new Process(\"" << (parent == ""? name:parent + " " + name) << "\", \""
+			<< name << "\", \"" << (parent == ""? "framescontainer":parent) << "\", " << timer << (level == 0? ", true));":", false));") << endl;
+
 		if(children.size() > 0)
 		{
 			for(vector<_Process*>::iterator index = children.begin(); index != children.end(); ++index)
-				(*index)->Output(out, dl, level + 1, force);
+				(*index)->Output(out, (parent == ""? name:parent + " " + name), dl, level + 1, force);
 		}
-		out << endl;
 	}
 }
 

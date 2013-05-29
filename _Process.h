@@ -15,7 +15,7 @@ public:
 	_Process(_Process* _parent, string _name, DWORD _threshold);
 	~_Process(void);
 
-	void Output(ofstream& stream, debugLevel dl, unsigned int level = 0U, bool force = false);	//0U is: 0 unsigned int
+	void Output(ofstream& stream, string parent, debugLevel dl, unsigned int level = 0U, bool force = false);	//0U is: 0 unsigned int
 	bool BreaksThreshold();
 
 	_Process* parent;

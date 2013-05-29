@@ -16,6 +16,9 @@ DebugTools::~DebugTools(void)
 	//delete frames
 	for(vector<_Process*>::iterator index = frames.begin(); index != frames.end(); ++index)
 		CleanupProcess(*index);
+	for(vector<DebugEvent*>::iterator index = events.begin(); index != events.end(); ++index)
+		delete (*index);
+	events.clear();
 }
 
 void DebugTools::StartFrame()
@@ -33,19 +36,25 @@ void DebugTools::SelectDebugLevel(debugLevel dl)
 
 void DebugTools::Output()
 {
-	ofstream log("frames.js");
-	outputHeader(log);
-	log << frameCount << " frames recorded" << endl;
+	ofstream log("processes.js");
+	ofstream events("events.js");
 	bool force = false;
+	int framecount = 0;
 	for(vector<_Process*>::iterator index = frames.begin(); index != frames.end(); ++index)
 	{
+		if(FrameHasEvent(framecount))
+		{
+			//output to events.js here
+			force = true;
+		}
 		if((*index)->BreaksThreshold() || this->level == all)
 			force = true;
-		(*index)->Output(log, level, force);
+		(*index)->Output(log, "", level, 0, force);
 		force = false;
+		++framecount;
 	}
-	outputFooter(log);
 	log.close();
+	events.close();
 }
 
 void DebugTools::EnterSubProcess(string s, unsigned int thresh)
@@ -90,11 +99,17 @@ void DebugTools::EndFrame()
 	++frameCount;
 }
 
-void DebugTools::outputHeader(ofstream& log)
+bool DebugTools::FrameHasEvent(int frameNumber)
 {
-	log << "";
+	for(vector<DebugEvent*>::iterator index = events.begin(); index != events.end(); ++index)
+	{
+		if((*index)->frameNum == frameNumber)
+			return true;
+	}
+	return false;
 }
 
-void DebugTools::outputFooter(ofstream& log)
+void DebugTools::AddEvent(string name)
 {
+	events.insert(events.end(), new DebugEvent(name, frameCount));
 }
