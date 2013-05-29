@@ -1,6 +1,8 @@
+<!DOCTYPE HTML>
 <html>
 <head>
-<title>SF2 Debug Log 2</title>
+<title>SF2 Debug Log</title>
+<meta charset="UTF-8">
 <style>
 body
 {
@@ -25,14 +27,64 @@ div>div
 	clear:both;
 	height:25px;
 }
+p
+{
+	overflow:hidden;
+}
 </style>
-</head>
-<body>
-<h1>SF2 Debug Log 2</h1>
+<script>
+function Process(longid, name, parent, millis, isFrame)
+{
+	this.longid = longid;
+	this.name = name;
+	this.parent = parent;
+	this.millis = millis;
+	this.isFrame = isFrame;
+}
 
-<div class="frame" id="14" >
-<p style="width:310px;background-color:#fff;">Frame 14 (31ms)</p>
-	<div style="width:170px;background-color:#eee;"><p style="width:170px;">Process: 17ms</p>
+var Processes = new Array();
+
+function get_random_color()
+{
+	//special thanks to the guy on stackoverflow for writing this function
+    var letters = '6789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.round(Math.random() * 9)];
+    }
+    return color;
+}
+
+function FillFrames(width)
+{
+	document.getElementById("framescontainer").innerHTML = "";
+	for(var i = 0; i < Processes.length; ++i)
+	{
+		var p = document.getElementById(Processes[i].parent);
+		//div with longid and color, then p with width
+		p.innerHTML += "<div " + (Processes[i].isFrame?"class=\"frame\" ":" ")
+		+ "id=\"" + Processes[i].longid + "\" style=\"background-color:"
+		+ get_random_color() + ";\">"
+		+ "<p style=\"width:" + (Processes[i].millis * width) + "px;\">"
+		+ Processes[i].name + ": " + Processes[i].millis + "ms</p></div>"
+		if(Processes[i].parent == "framescontainer")
+		p.innerHTML += "<div class=\"clearboth\"></div>";
+	}
+}
+</script>
+<script type="text/javascript" src="processes.js"></script>
+</head>
+<body onload="FillFrames(10);">
+<h1>SF2 Debug Log</h1>
+<form>
+<label for="msw">Millisecond Width: </label><input type="text" id="msw" name="msw">
+<input type="button" value="Submit" onclick="FillFrames(msw.value);">
+</form>
+<div id="framescontainer">
+<!--
+<div class="frame" id="14">
+<p style="width:310px;background-color:#fff;">Frame 14 31ms</p>
+	<div><p style="width:170px;background-color:#eee;">Process: 17ms</p>
 		<div><p style="width:40px;background-color:#ddd;">Run: 4ms</p></div>
 		<div><p style="width:70px;background-color:#ddc;">EndStep: 7ms</p></div>
 		<div><p style="width:0px;background-color:#ddb;">Collision: 0ms</p></div>
@@ -43,21 +95,9 @@ div>div
 		<div><p style="width:140px;background-color:#ddd;">DrawObjects: 14ms</p></div>
 	</div>
 </div>
-
 <div class="clearboth"></div>
+-->
 
-<div class="frame" id="37" >
-<p style="width:310px;background-color:#fff;">Frame 14 (31ms)</p>
-	<div style="width:170px;background-color:#eee;"><p style="width:170px;">Process: 17ms</p>
-		<div><p style="width:40px;background-color:#ddd;">Run: 4ms</p></div>
-		<div><p style="width:70px;background-color:#ddc;">EndStep: 7ms</p></div>
-		<div><p style="width:0px;background-color:#ddb;">Collision: 0ms</p></div>
-		<div><p style="width:60px;background-color:#dda;">Reconcile: 6ms</p></div>
-	</div>
-
-	<div style="width:150px;background-color:#eed;"><p>Render: 15ms</p>
-	</div>
-</div>
 
 </div>
 </body>
