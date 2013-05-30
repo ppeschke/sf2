@@ -8,20 +8,9 @@
 using namespace std;
 
 int randomNumber(int low, int high);
-string stateNames[] = {"starting", "running", "choosingShip", "settings", "paused", "over", "quitting", "debugHolding", "debugMoving"};
-//void CollisionDetection(Game* thegame);
 
 void Loop(Game* thegame)
 {
-	/*ofstream log;
-	log.open("frameTimes.csv");
-	log << "Process,Render,Frame, run, endStep, collision, reconcile, gameState" << endl;
-	DWORD FrameTimer;
-	DWORD RenderTimer;
-	DWORD reusableTimer = 0;
-	DWORD runTimer = 0, endStepTimer = 0, collisionTimer = 0, reconcileTimer = 0;
-	DWORD ProcessTimer;*/
-
 	DWORD startingPoint = GetTickCount();
 	DWORD deltaTime;
 	//while there's not a quit message from the window and the game hasn't ended
@@ -33,8 +22,6 @@ void Loop(Game* thegame)
 		startingPoint = GetTickCount();
 		thegame->deltaTime = deltaTime;
 
-		//FrameTimer = GetTickCount();
-		//ProcessTimer = GetTickCount();
 		Input(thegame);
 
 		//run
@@ -42,22 +29,16 @@ void Loop(Game* thegame)
 		{
 		case running:
 			thegame->debug.EnterSubProcess("Process", 10);
-			//runTimer = GetTickCount();
 			if(thegame->inputdata.p.downState || thegame->inputdata.tab.downState)
 				thegame->state = paused;
-			/*log << "Run:" << endl;
-			log << "Index, mesh, timer" << endl;*/
 			thegame->debug.EnterSubProcess("Run", 10);
 			for(unsigned int index = 0; index <= thegame->lastIndex; ++index)
 			{
-				//reusableTimer = GetTickCount();
 				if(thegame->objects[index] != NULL && !thegame->objects[index]->dead)
 				{
 					thegame->objects[index]->run(deltaTime / 1000.0f);
 					if(thegame->objects[index]->bb)
 						thegame->collisionDetection.UpdatePosition(thegame->objects[index]->bb, thegame->objects[index]->bb->myNode);
-					/*reusableTimer = GetTickCount() - reusableTimer;
-					log << index << "," << (thegame->objects[index]->mesh != NULL?(int)(thegame->objects[index]->mesh->type):0) << "," << reusableTimer << endl;*/
 				}
 			}
 			thegame->debug.ExitSubProcess();
@@ -65,23 +46,16 @@ void Loop(Game* thegame)
 			{
 
 			}
-			//runTimer = GetTickCount() - runTimer;
 
 			//the run function (called above) is for independant objects); objects that follow independant objects need the 
 			//independants to get into place before they situate themselves. Thus the endStep function (called below) is called last in the loop,
 			//forcing the independants to be settled before the objects that follow them position themselves.
-			//endStepTimer = GetTickCount();
-			/*log << "endStep:" << endl;
-			log << "Index, mesh, timer" << endl;*/
 			thegame->debug.EnterSubProcess("EndStep", 10);
 			for(unsigned int index = 0; index <= thegame->lastIndex; ++index)
 			{
-				//reusableTimer = GetTickCount();
 				if(thegame->objects[index] != NULL && !thegame->objects[index]->dead)
 				{
 					thegame->objects[index]->endStep(deltaTime / 1000.0f);
-					/*reusableTimer = GetTickCount() - reusableTimer;
-					log << index << "," << (thegame->objects[index]->mesh != NULL?(int)(thegame->objects[index]->mesh->type):0) << "," << reusableTimer << endl;*/
 				}
 			}
 
@@ -90,19 +64,13 @@ void Loop(Game* thegame)
 
 			thegame->debug.ExitSubProcess();
 
-			//endStepTimer = GetTickCount() - endStepTimer;
-
-			//collisionTimer = GetTickCount();
 			thegame->debug.EnterSubProcess("Collisions", 10);
 			thegame->collisionDetection.Run();
 			thegame->debug.ExitSubProcess();
-			//collisionTimer = GetTickCount() - collisionTimer;
 
-			//reconcileTimer = GetTickCount();
 			thegame->debug.EnterSubProcess("Reconcile", 10);
 			thegame->reconcileObjects();
 			thegame->debug.ExitSubProcess();
-			//reconcileTimer = GetTickCount() - reconcileTimer;
 
 			if(thegame->inputdata.escape.downState)
 				changeGameMode(over);
@@ -169,20 +137,9 @@ void Loop(Game* thegame)
 		}
 		if(thegame->gametype != NULL && thegame->gametype->checkWin())
 			changeGameMode(over);
-		
-		//ProcessTimer = GetTickCount() - ProcessTimer;
 
-		//RenderTimer = GetTickCount();
 		Render(thegame);
-		//RenderTimer = GetTickCount() - RenderTimer;
 
-		//FrameTimer = GetTickCount() - FrameTimer;
-
-		/*log << ProcessTimer;
-		log << "," << RenderTimer;
-		log << "," << FrameTimer;
-		log << ", " << runTimer << "," << endStepTimer << "," << collisionTimer << "," << reconcileTimer << ",";
-		log << stateNames[thegame->state] << endl;*/
 		thegame->debug.EndFrame();
 	}
 	thegame->state = over;

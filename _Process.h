@@ -12,7 +12,7 @@ enum debugLevel {all, warning};
 class _Process
 {
 public:
-	_Process(_Process* _parent, string _name, DWORD _threshold);
+	_Process(_Process* _parent, string _name, DWORD _threshold, int framenum);
 	~_Process(void);
 
 	void Output(ofstream& stream, string parent, debugLevel dl, unsigned int level = 0U, bool force = false);	//0U is: 0 unsigned int
@@ -22,6 +22,7 @@ public:
 	string name;
 	DWORD threshold;
 	DWORD timer;
+	int framenumber;
 	vector<_Process*> children;
 };
 

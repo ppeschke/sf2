@@ -33,22 +33,35 @@ p
 {
 	overflow:hidden;
 }
+p.eventpara
+{
+	overflow:auto;
+}
 </style>
 <script>
-function Process(longid, name, parent, millis, isFrame)
+function Process(longid, name, parent, millis, frameNum, isFrame)
 {
 	this.longid = longid;
 	this.name = name;
 	this.parent = parent;
 	this.millis = millis;
+	this.frameNum = frameNum;
 	this.isFrame = isFrame;
 }
 
+function Event(name, number)
+{
+	this.name = name;
+	this.framenumber = number;
+}
+
 var Processes = new Array();
+var _Events = new Array();
 
 function get_random_color()
 {
 	//special thanks to the guy on stackoverflow for writing this function
+	//credit where credit is due :)
     var letters = '6789ABCDEF'.split('');
     var color = '#';
     for (var i = 0; i < 6; i++ ) {
@@ -63,6 +76,11 @@ function FillFrames(width)
 	for(var i = 0; i < Processes.length; ++i)
 	{
 		var p = document.getElementById(Processes[i].parent);
+		for(var n = 0; n < _Events.length; ++n)
+		{
+			if(_Events[n].framenumber == Processes[i].frameNum && Processes[i].isFrame)
+				p.innerHTML += "<p class=\"eventpara\">At frame " + _Events[n].framenumber + ": " + _Events[n].name + "</p>";
+		}
 		//div with longid and color, then p with width
 		p.innerHTML += "<div " + (Processes[i].isFrame?"class=\"frame\" ":" ")
 		+ "id=\"" + Processes[i].longid + "\" style=\"background-color:"
@@ -72,12 +90,25 @@ function FillFrames(width)
 		if(Processes[i].parent == "framescontainer")
 		p.innerHTML += "<div class=\"clearboth\">-----</div>";
 	}
+	FillEvents();
+}
+
+function FillEvents()
+{
+	var e = document.getElementById("eventscontainer");
+	e.innerHTML = "";
+	for(var i = 0; i < _Events.length; ++i)
+	{
+		e.innerHTML += "<p class=\"eventpara\">At frame " + _Events[i].framenumber + ": " + _Events[i].name + "</p>";
+	}
 }
 </script>
 <script type="text/javascript" src="processes.js"></script>
+<script type="text/javascript" src="events.js"></script>
 </head>
 <body onload="FillFrames(10);">
 <h1>SF2 Debug Log</h1>
+<div id="eventscontainer"></div>
 <form>
 <label for="msw">Millisecond Width: </label><input size="4" type="text" id="msw" name="msw"> px
 <input type="button" value="Submit" onclick="FillFrames(msw.value);">

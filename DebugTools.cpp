@@ -5,7 +5,7 @@ using namespace std;
 DebugTools::DebugTools(unsigned int frameThreshold, debugLevel dl)
 {
 	current = NULL;
-	frameCount = 0;
+	frameCount = 1;
 	threshold = frameThreshold;
 	SelectDebugLevel(dl);
 }
@@ -24,8 +24,8 @@ DebugTools::~DebugTools(void)
 void DebugTools::StartFrame()
 {
 	stringstream ss;
-	ss << "Frame No. " << frameCount + 1;
-	current = new _Process(NULL, ss.str(), threshold);
+	ss << "Frame No. " << frameCount;
+	current = new _Process(NULL, ss.str(), threshold, this->frameCount);
 	frames.insert(frames.end(), current);
 }
 
@@ -37,14 +37,17 @@ void DebugTools::SelectDebugLevel(debugLevel dl)
 void DebugTools::Output()
 {
 	ofstream log("processes.js");
-	ofstream events("events.js");
+	ofstream eventlog("events.js");
+	for(vector<DebugEvent*>::iterator index = events.begin(); index != events.end(); ++index)
+	{
+		eventlog << "_Events.push(new Event(\"" << (*index)->name << "\", " << (*index)->frameNum << "));" << endl;
+	}
 	bool force = false;
-	int framecount = 0;
+	int framecount = 1;
 	for(vector<_Process*>::iterator index = frames.begin(); index != frames.end(); ++index)
 	{
 		if(FrameHasEvent(framecount))
 		{
-			//output to events.js here
 			force = true;
 		}
 		if((*index)->BreaksThreshold() || this->level == all)
@@ -54,14 +57,14 @@ void DebugTools::Output()
 		++framecount;
 	}
 	log.close();
-	events.close();
+	eventlog.close();
 }
 
 void DebugTools::EnterSubProcess(string s, unsigned int thresh)
 {
 	_Process* temp;
 	temp = current;
-	current = new _Process(current, s, thresh);
+	current = new _Process(current, s, thresh, this->frameCount);
 	temp->children.insert(temp->children.end(), current);
 }
 
