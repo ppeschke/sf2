@@ -2,10 +2,13 @@
 #include "Player.h"
 
 #include <time.h>
+#include <sstream>
+using namespace std;
 
 bool HandleMessages();
 void DisplayWindow(GameWindow* gw, HINSTANCE hInstance, int nCmdShow);
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+string gameStates[] = {"starting", "running", "choosingShip", "settings", "paused", "over", "quitting", "debugHolding", "debugMoving"};
 
 Game thegame;
 
@@ -153,7 +156,10 @@ float Distance(const Vec2D& a, const Vec2D& b)
 
 void changeGameMode(int gm)
 {
+	stringstream ss;
 	thegame.state = (gameState)gm;
+	ss << "Game mode changed to " << gameStates[(int)thegame.state];
+	thegame.debug.AddEvent(ss.str());
 	if((gameState)gm == choosingShip)
 		getGame()->chooseShipMenu.pointer->coords = getGame()->gametype->settingsMenu.pointer->coords;
 }

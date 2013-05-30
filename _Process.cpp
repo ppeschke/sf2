@@ -1,10 +1,11 @@
 #include "_Process.h"
 
-_Process::_Process(_Process* _parent, string _name, DWORD _threshold)
+_Process::_Process(_Process* _parent, string _name, DWORD _threshold, int framenum)
 {
 	parent = _parent;
 	name = _name;
 	threshold = _threshold;
+	framenumber = framenum;
 	timer = GetTickCount();
 }
 
@@ -22,7 +23,7 @@ void _Process::Output(ofstream& out, string parent, debugLevel dl, unsigned int 
 		//Processes.push(new Process("Frame 14", "Frame 14", "framescontainer", 31, true));
 		//Processes.push(new Process("Frame 14 Render Draw Objects", "Draw Objects", "Frame 14 Render", 14, false));
 		out << "Processes.push(new Process(\"" << (parent == ""? name:parent + " " + name) << "\", \""
-			<< name << "\", \"" << (parent == ""? "framescontainer":parent) << "\", " << timer << (level == 0? ", true));":", false));") << endl;
+			<< name << "\", \"" << (parent == ""? "framescontainer":parent) << "\", " << timer << ", " << this->framenumber << (level == 0? ", true));":", false));") << endl;
 
 		if(children.size() > 0)
 		{
