@@ -26,5 +26,6 @@ void DebrisPart::run(float deltaTime)
 
 DebrisPart::~DebrisPart(void)
 {
-	delete [] m;
+	if(m != NULL)
+		delete m;
 }

@@ -17,6 +17,7 @@ public:
 
 	virtual void run(float deltaTime);
 	virtual void Render(Vec2D* loc, Vec2D* dir);
+	virtual void Kill();
 
 	list<DebrisPart*> parts;
 	Vec2D shipFinalDir;

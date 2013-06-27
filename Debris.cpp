@@ -16,13 +16,13 @@ Debris::Debris(Ship* s, Player* p, Vec2D location, Vec2D direction, bool collide
 			meshpart = new Mesh();
 			meshpart->polyNum = 1;
 			meshpart->mountNum = 0;
-			meshpart->polys = new sf2::Polygon();
-			meshpart->polys->length = 2;
-			meshpart->polys->vertices = new sf2::CUSTOMVERTEX[2];
-			meshpart->polys->vertices[0] = m->polys[i].vertices[p];
-			meshpart->polys->vertices[1] = m->polys[i].vertices[p+1];
-			midpoint = Vec2D(meshpart->polys->vertices[1].X + meshpart->polys->vertices[0].X, meshpart->polys->vertices[1].Y + meshpart->polys->vertices[0].Y)/2.0f;
-			meshpart->radius = Distance(Vec2D(meshpart->polys->vertices[0].X, meshpart->polys->vertices[0].Y), Vec2D(meshpart->polys->vertices[1].X, meshpart->polys->vertices[1].Y)) / 2.0f;
+			meshpart->polys = new sf2::Polygon[1];
+			meshpart->polys[0].length = 2;
+			meshpart->polys[0].vertices = new sf2::CUSTOMVERTEX[2];
+			meshpart->polys[0].vertices[0] = m->polys[i].vertices[p];
+			meshpart->polys[0].vertices[1] = m->polys[i].vertices[p+1];
+			midpoint = Vec2D(meshpart->polys[0].vertices[1].X + meshpart->polys[0].vertices[0].X, meshpart->polys[0].vertices[1].Y + meshpart->polys[0].vertices[0].Y)/2.0f;
+			meshpart->radius = Distance(Vec2D(meshpart->polys[0].vertices[0].X, meshpart->polys[0].vertices[0].Y), Vec2D(meshpart->polys[0].vertices[1].X, meshpart->polys[0].vertices[1].Y)) / 2.0f;
 			Vec2D addedVel = 3.0f/midpoint;	//difference between midpoint and ship's midpoint
 			addedVel.scale(meshpart->radius);	//scale by size of part
 
@@ -44,6 +44,15 @@ Debris::Debris(Ship* s, Player* p, Vec2D location, Vec2D direction, bool collide
 
 Debris::~Debris(void)
 {
+}
+
+void Debris::Kill()
+{
+	for(list<DebrisPart*>::iterator index = parts.begin(); index != parts.end(); ++index)
+	{
+		delete (*index);
+	}
+	dead = true;
 }
 
 void Debris::run(float deltaTime)
