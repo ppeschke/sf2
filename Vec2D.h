@@ -4,6 +4,8 @@
 #include <string>
 using namespace std;
 
+#include "Polygon.h"
+
 class Vec2D
 {
 public:
@@ -15,6 +17,7 @@ public:
 public:
 	Vec2D(void);
 	Vec2D(float _x, float _y);
+	Vec2D(sf2::CUSTOMVERTEX);
 
 	void add(Vec2D v);
 	void sub(Vec2D v);				// subtract v from this vector, see the other version
@@ -56,5 +59,6 @@ public:
 };
 
 //float operator*(Vec2D u, Vec2D v);	//use .dot for the dot product, * for multiplication (above)
+Vec2D operator/(const float& left, const Vec2D& right);
 
 #endif

@@ -16,8 +16,6 @@ void LoadSprite(LPCWSTR filename, renderableType mt);
 
 void LoadGraphics(Game* thegame)
 {
-	/*outlog.open("RenderLog.csv");
-	outlog << "Start Render,Objects,Messages,UI Elements,End Render,Frame" << endl;*/
 	InitDirect3D(thegame);
 	//load graphics
 	LoadMesh("meshes\\drone.mesh", drone, 3);
@@ -80,14 +78,9 @@ void Render(Game* thegame)
 	case debugHolding:
 	case debugMoving:
 	case running:
-		/*DWORD StartTimer, ObjectTimer, MessageTimer, StuffTimer, EndTimer, FrameTimer;
-		FrameTimer = GetTickCount();
-		StartTimer = GetTickCount();*/
 		thegame->debug.EnterSubProcess("Render", 17);
 		StartRender();
-		//StartTimer = GetTickCount() - StartTimer;
 		AdjustCamera(thegame->pc->ship->loc.x, thegame->pc->ship->loc.y, thegame);
-		//ObjectTimer = GetTickCount();
 
 		//arena boundary
 		thegame->arena->mesh->Render(&thegame->arena->loc, &thegame->arena->dir);
@@ -97,6 +90,7 @@ void Render(Game* thegame)
 
 		//sensorStrength
 		//Draw2DCircle(thegame->pc->ship->loc.x, thegame->pc->ship->loc.y, thegame->pc->ship->sensorStrength, D3DCOLOR_XRGB(255, 255, 0));
+
 		for(unsigned int index = 0; index <= thegame->lastIndex; ++index)
 		{
 			if(thegame->objects[index] != NULL && thegame->objects[index]->drawMe)
@@ -128,14 +122,10 @@ void Render(Game* thegame)
 				}
 			}
 		}
-		//ObjectTimer = GetTickCount() - ObjectTimer;
 
 		//thegame->collisionDetection.Render();
 
-		//MessageTimer = GetTickCount();
 		thegame->messages.displayMessages();
-		//MessageTimer = GetTickCount() - MessageTimer;
-		//StuffTimer = GetTickCount();
 
 		StartSpriteRender();
 		if(thegame->pc != NULL)
@@ -235,25 +225,14 @@ void Render(Game* thegame)
 			drawText("Speed:", thegame->gWindow.Width/2 - 185, thegame->gWindow.Height - 43, 0, 255, 255);
 		}
 
-		/*StuffTimer = GetTickCount() - StuffTimer;
-		EndTimer = GetTickCount();*/
 		EndRender();
-		/*EndTimer = GetTickCount() - EndTimer;
-		FrameTimer = GetTickCount() - FrameTimer;*/
 
-		//outlog << StartTimer << "," << ObjectTimer << "," << MessageTimer << "," << StuffTimer << "," << EndTimer << "," << FrameTimer << endl;
 		thegame->debug.ExitSubProcess();
 		break;
 	case paused:
-		//DWORD StartTimer, ObjectTimer, MessageTimer, StuffTimer, EndTimer, FrameTimer;
-		//FrameTimer = GetTickCount();
-		//StartTimer = GetTickCount();
 		
 		StartRender();
-		//DrawRect(0.0f, 0.0f, 100.0f, 100.0f, D3DCOLOR_XRGB(0xff,0xff, 0xff));
-		//StartTimer = GetTickCount() - StartTimer;
 		AdjustCamera(thegame->pc->ship->loc.x, thegame->pc->ship->loc.y, thegame);
-		//ObjectTimer = GetTickCount();
 		
 		//sensorStrength
 		//Draw2DCircle(thegame->pc->ship->loc.x, thegame->pc->ship->loc.y, thegame->pc->ship->sensorStrength, D3DCOLOR_XRGB(255, 255, 0));
@@ -303,13 +282,8 @@ void Render(Game* thegame)
 				}
 			}
 		}
-		//ObjectTimer = GetTickCount() - ObjectTimer;
-		//thegame->collisionDetection.Render();
-		//MessageTimer = GetTickCount();
 		thegame->messages.displayMessages();
-		//MessageTimer = GetTickCount() - MessageTimer;
-		//StuffTimer = GetTickCount();
-
+		
 		StartSpriteRender();
 		if(thegame->pc != NULL)
 		{
@@ -408,13 +382,8 @@ void Render(Game* thegame)
 			drawText("Speed:", thegame->gWindow.Width/2 - 185, thegame->gWindow.Height - 43, 0, 255, 255);
 		}
 		thegame->gametype->pauseMenu.Render();
-		//StuffTimer = GetTickCount() - StuffTimer;
-		//EndTimer = GetTickCount();
 		EndRender();
-		//EndTimer = GetTickCount() - EndTimer;
-		//FrameTimer = GetTickCount() - FrameTimer;
 
-		//outlog << StartTimer << "," << ObjectTimer << "," << MessageTimer << "," << StuffTimer << "," << EndTimer << "," << FrameTimer << endl;
 		break;
 		case choosingShip:
 			StartRender();
@@ -464,5 +433,4 @@ void UnloadGraphics(Game* thegame)
 		delete (*index);
 	}
 	thegame->renderables.clear();
-	//outlog.close();
 }

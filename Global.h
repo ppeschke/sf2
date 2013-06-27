@@ -61,6 +61,7 @@ void SetCamera();
 void AdjustCamera(float x, float y, Game* thegame);
 void InitDirect3D(Game* thegame);
 void DrawMesh(Mesh* mesh, Vec2D* loc, Vec2D* dir);
+void DrawMeshPartWithRotations(sf2::Polygon* poly, Vec2D* loc, Vec2D* dir, Vec2D* rotationPoint, float angle);
 void DrawParticleTexture(Texture* t, D3DXVECTOR3 position);
 void drawText(const char* text, int x, int y, int r, int g, int b);
 void drawBigText(const char* text, int x, int y, int r, int g, int b);

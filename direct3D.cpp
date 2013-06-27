@@ -227,6 +227,32 @@ void DrawMesh(Mesh* mesh, Vec2D* loc, Vec2D* dir)
     return;
 }
 
+void DrawMeshPartWithRotations(sf2::Polygon* poly, Vec2D* loc, Vec2D* dir, Vec2D* rotationPoint, float angle)
+{
+	d3ddev->SetFVF(CUSTOMFVF);
+	d3ddev->SetTexture(0, NULL);
+
+	//set rotation
+	D3DXMATRIX matPos;
+	D3DXMATRIX matShipRot;
+	D3DXMATRIX matPartRot;
+	D3DXMATRIX matRotationPoint;
+	D3DXMATRIX matNegativeRotationPoint;
+
+	D3DXMatrixTranslation(&matPos, loc->x, loc->y, 0);
+	D3DXMatrixRotationZ(&matShipRot, dir->getDirection()-(float)PI/2.0f);
+	D3DXMatrixTranslation(&matRotationPoint, rotationPoint->x, rotationPoint->y, 0.0f);
+	D3DXMatrixTranslation(&matNegativeRotationPoint, -rotationPoint->x, -rotationPoint->y, 0.0f);
+	D3DXMatrixRotationZ(&matPartRot, angle);
+
+	//set the transforms (multiply the matrices)
+	//d3ddev->SetTransform(D3DTS_WORLD, &(matShipRot * (-matRotationPoint) * matPartRot * matRotationPoint * matPos));
+	d3ddev->SetTransform(D3DTS_WORLD, &(matShipRot * matNegativeRotationPoint * matPartRot * matPos));
+
+	d3ddev->SetStreamSource(0, poly->v_buffer, 0, sizeof(sf2::CUSTOMVERTEX));
+	d3ddev->DrawPrimitive(D3DPT_LINESTRIP, 0, poly->length - 1);
+}
+
 Mesh* CreateArena(float radius, Color color)
 {
 	Mesh* m = new Mesh();

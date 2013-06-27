@@ -14,6 +14,12 @@ Vec2D::Vec2D(float _x, float _y)
 	y = _y;
 }
 
+Vec2D::Vec2D(sf2::CUSTOMVERTEX cv)
+{
+	x = cv.X;
+	y = cv.Y;
+}
+
 void Vec2D::add(Vec2D v)
 {
 	x += v.x;
@@ -226,3 +232,8 @@ Vec2D Vec2D::operator*(const Vec2D& right) const
 {
 	return (u.x * v.x + u.y * v.y);
 }*/
+
+Vec2D operator/(const float& left, const Vec2D& right)
+{
+	return Vec2D((right.x != 0.0f? left/right.x:0.0f), (right.y != 0.0f? left/right.y:0.0f));
+}

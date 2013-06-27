@@ -8,6 +8,7 @@
 #include "Flag.h"
 #include "CursorTarget.h"
 #include "hostileDrone.h"
+#include "Debris.h"
 
 Ship::Ship(unsigned int index, Player* o, renderableType i, Vec2D location, Vec2D direction, float maxspeed, float sensor, int hp, int weight, bool collides, bool draw) : Base(index, o, location, direction, collides, draw)
 {
@@ -87,7 +88,10 @@ void Ship::run(float deltaTime)
 		if(hitpoints <= 0)
 		{
 			die();
+			//explosion
 			getGame()->insertObject(new ShipExplosion(getGame()->getNextIndex(), this->loc, (int)this->mesh->radius));
+			//debris
+			getGame()->insertObject(new Debris(this, this->owner, this->loc, this->dir, false, true));
 		}
 		else
 		{

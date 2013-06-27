@@ -1,0 +1,9 @@
+_Events.push(new Event("Game mode changed to settings", 86));
+_Events.push(new Event("Game mode changed to running", 165));
+_Events.push(new Event("Game mode changed to choosingShip", 165));
+_Events.push(new Event("Game mode changed to running", 1196));
+_Events.push(new Event("Game mode changed to choosingShip", 2547));
+_Events.push(new Event("Game mode changed to running", 2627));
+_Events.push(new Event("Game mode changed to choosingShip", 4055));
+_Events.push(new Event("Game mode changed to running", 4171));
+_Events.push(new Event("Game mode changed to over", 5344));
