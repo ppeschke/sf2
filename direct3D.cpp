@@ -247,7 +247,7 @@ void DrawMeshPartWithRotations(sf2::Polygon* poly, Vec2D* loc, Vec2D* dir, Vec2D
 
 	//set the transforms (multiply the matrices)
 	//d3ddev->SetTransform(D3DTS_WORLD, &(matShipRot * (-matRotationPoint) * matPartRot * matRotationPoint * matPos));
-	d3ddev->SetTransform(D3DTS_WORLD, &(matShipRot * matNegativeRotationPoint * matPartRot * matPos));
+	d3ddev->SetTransform(D3DTS_WORLD, &(matNegativeRotationPoint * matPartRot * matRotationPoint * matShipRot * matPos));
 
 	d3ddev->SetStreamSource(0, poly->v_buffer, 0, sizeof(sf2::CUSTOMVERTEX));
 	d3ddev->DrawPrimitive(D3DPT_LINESTRIP, 0, poly->length - 1);

@@ -37,7 +37,7 @@ Debris::Debris(Ship* s, Player* p, Vec2D location, Vec2D direction, bool collide
 
 			float rotationspeed = randomFloat(-limit, limit);
 			LoadToVRAM(meshpart);
-			parts.insert(parts.end(), new DebrisPart(meshpart, randomFloat(3.0f, 10.0f), s->loc, s->vel + addedVel, rotationpoint, midpoint, rotationspeed));
+			parts.insert(parts.end(), new DebrisPart(meshpart, randomFloat(1.0f, 5.0f), s->loc, s->vel + addedVel, rotationpoint, midpoint, rotationspeed));
 		}
 	}
 }
