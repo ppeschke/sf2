@@ -78,7 +78,7 @@ void Render(Game* thegame)
 	case debugHolding:
 	case debugMoving:
 	case running:
-		thegame->debug.EnterSubProcess("Render", 17);
+		thegame->debug.EnterSubProcess("Render", 18);
 		StartRender();
 		AdjustCamera(thegame->pc->ship->loc.x, thegame->pc->ship->loc.y, thegame);
 

@@ -30,6 +30,7 @@ void Launcher::shoot()
 {
 	if(Timer <= 0.0f)
 	{
+		getGame()->debug.AddEvent("Shooting");
 		Timer = ROF;
 		Base* temp;
 		switch(shootWhat)

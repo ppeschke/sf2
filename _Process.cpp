@@ -19,7 +19,7 @@ void _Process::Output(ofstream& out, string parent, debugLevel dl, unsigned int 
 		force = true;
 	if(dl == all || force)
 	{
-		//full name, name, parent, ms, topLevel
+		//full name, short name, parent's full name, ms, framenumber, topLevel
 		//Processes.push(new Process("Frame 14", "Frame 14", "framescontainer", 31, true));
 		//Processes.push(new Process("Frame 14 Render Draw Objects", "Draw Objects", "Frame 14 Render", 14, false));
 		out << "Processes.push(new Process(\"" << (parent == ""? name:parent + " " + name) << "\", \""

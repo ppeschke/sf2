@@ -87,6 +87,7 @@ void Ship::run(float deltaTime)
 	{
 		if(hitpoints <= 0)
 		{
+			getGame()->debug.AddEvent("Ship died");
 			die();
 			//explosion
 			getGame()->insertObject(new ShipExplosion(getGame()->getNextIndex(), this->loc, (int)this->mesh->radius));

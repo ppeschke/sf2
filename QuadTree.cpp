@@ -92,11 +92,17 @@ void QuadTree::clean(quadtreenode* node)
 
 void QuadTree::Run()
 {
-	for(unsigned int index = 0; index <= thegame->lastIndex; ++index)
+	thegame->debug.EnterSubProcess("Collision Run Loop", 0);
+	for(unsigned int index = 0; index <= thegame->lastIndex; ++index)	//loop through each object in the game
 	{
 		if(thegame->objects[index] != NULL && thegame->objects[index]->collidable)
+		{
+			thegame->debug.EnterSubProcess(string("Checking ") + typeid(*(thegame->objects[index])).name() + " " + itos(thegame->objects[index]->index), 0);
 			Check(thegame->objects[index]->bb);
+			thegame->debug.ExitSubProcess();
+		}
 	}
+	thegame->debug.ExitSubProcess();
 }
 
 bool QuadTree::inBounds(BoundingBox* a, quadtreenode* node)
@@ -214,8 +220,11 @@ void QuadTree::PushDown(BoundingBox* bb, quadtreenode* qtn)
 void QuadTree::Check(BoundingBox* bb)
 {
 	list<BoundingBox*> supObjs;
+	thegame->debug.EnterSubProcess("Finding SuperObjects", 0);
 	if(bb->myNode->parent)
 		FindSupObjs(bb->myNode->parent, supObjs);
+	thegame->debug.ExitSubProcess();
+	thegame->debug.EnterSubProcess("AddThisNode", 0);
 	if(bb->myNode->objs.size() > 1)
 	{
 		for(list<BoundingBox*>::iterator index = bb->myNode->objs.begin(); index != bb->myNode->objs.end(); ++index)
@@ -224,8 +233,14 @@ void QuadTree::Check(BoundingBox* bb)
 				supObjs.insert(supObjs.end(), *index);	//add everyone else in this qtn except for me
 		}
 	}
+	thegame->debug.ExitSubProcess();
 	if(supObjs.size() > 0)
+	{
+		//thegame->debug.AddEvent(string("Fine collision detection for ") + itos(supObjs.size()) + " objects");
+		thegame->debug.EnterSubProcess("Fine Collision Detection", 0);
 		FineCollisionDetection(bb, supObjs);
+		thegame->debug.ExitSubProcess();
+	}
 }
 
 void QuadTree::FindSupObjs(quadtreenode* qtn, list<BoundingBox*>& supObjs)
@@ -246,7 +261,9 @@ void QuadTree::FineCollisionDetection(BoundingBox* a, list<BoundingBox*>& b)
 			<= a->owner->mesh->radius + (*checkIndex)->owner->mesh->radius)		//within bounding circle
 		{
 			//thegame->messages.addMessage("Collision Detected", Color(1.0f, 1.0f, 1.0f));
+			thegame->debug.EnterSubProcess("OnCollision", 0);
 			thegame->gametype->onCollision(a->owner, (*checkIndex)->owner);
+			thegame->debug.ExitSubProcess();
 		}
 	}
 }

@@ -67,18 +67,18 @@ void GameType::OnStart(Game* thegame)
 	teams[1].name = "Computer Team";
 
 	//spawn points
-	SpawnPoint* sp = new SpawnPoint(thegame->getNextIndex(), 0, NULL, spawnPoint, Vec2D(-400.0f, 0.0f), Vec2D(0.0f, 1.0f));
+	SpawnPoint* sp = new SpawnPoint(thegame->getNextIndex(), 0, NULL, spawnPoint, Vec2D(-430.0f, 40.0f), Vec2D(0.0f, 1.0f));
 	thegame->insertObject(sp);
 	teams[0].spawnpoint = sp;
-	sp = new SpawnPoint(thegame->getNextIndex(), 1, NULL, spawnPoint, Vec2D(0.0f, 0.0f), Vec2D(0.0f, 1.0f));
+	sp = new SpawnPoint(thegame->getNextIndex(), 1, NULL, spawnPoint, Vec2D(430.0f, -40.0f), Vec2D(0.0f, 1.0f));
 	thegame->insertObject(sp);
 	teams[1].spawnpoint = sp;
 
 	//objectives
-	Flag* f = new Flag(thegame->getNextIndex(), flag, Vec2D(0.0f, 400.0f), 0);
+	Flag* f = new Flag(thegame->getNextIndex(), flag, Vec2D(30.0f, 430.0f), 0);
 	thegame->insertObject(f);
 	teams[0].flag = f;
-	f = new Flag(thegame->getNextIndex(), flag, Vec2D(0.0f, -400.0f), 1);
+	f = new Flag(thegame->getNextIndex(), flag, Vec2D(-30.0f, -430.0f), 1);
 	thegame->insertObject(f);
 	teams[1].flag = f;
 
@@ -305,6 +305,7 @@ Ship* GameType::SpawnShip(renderableType mT, unsigned int playerNum, Vec2D dir, 
 
 void GameType::onCollision(Base* a, Base* b)
 {
+	getGame()->debug.AddEvent(string("Collision of ") + typeid(*a).name() + " and " + typeid(*b).name());
 	if(a->dead || b->dead)
 		return;
 	if(typeid((*a)) == typeid(Ship) && typeid((*b)) == typeid(Ship))
@@ -312,8 +313,8 @@ void GameType::onCollision(Base* a, Base* b)
 		//reverse the last step (or two if necessary) so they're not colliding anymore
 		while(Distance(a->loc, b->loc) <= a->mesh->radius + b->mesh->radius)
 		{
-			a->loc -= a->vel * getGame()->deltaTime/1000.0f;
-			b->loc -= b->vel * getGame()->deltaTime/1000.0f;
+			a->loc -= a->vel * (float)getGame()->deltaTime/1000.0f;
+			b->loc -= b->vel * (float)getGame()->deltaTime/1000.0f;
 		}
 
 		float cor = 0.7f;

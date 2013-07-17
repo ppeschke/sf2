@@ -93,26 +93,27 @@ void CloseDirect3D()
 // Start rendering
 void StartRender()
 {
+	getGame()->debug.EnterSubProcess("Starting Render", 0);
 	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 	d3ddev->Clear(0, NULL, D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 	d3ddev->BeginScene();
-
+	getGame()->debug.ExitSubProcess();
 	return;
 }
 
 // Stop rendering
 void EndRender()
 {
-	/*DWORD TotalTimer, EndTimer, PresentTimer;
-	TotalTimer = GetTickCount();
-	EndTimer = GetTickCount();*/
+	//so... the Present function is consistently taking 15-17ms to run... pretty sure it's waiting on video memory to become available...
+	//there's really not much I can do about it I think.
+	//getGame()->debug.EnterSubProcess("Ending Render", 0);
+	//getGame()->debug.EnterSubProcess("End Scene", 0);
     d3ddev->EndScene();
-	/*EndTimer = GetTickCount() - EndTimer;
-	PresentTimer = GetTickCount();*/
+	//getGame()->debug.ExitSubProcess();
+	//getGame()->debug.EnterSubProcess("Present", 0);
     d3ddev->Present(NULL, NULL, NULL, NULL);
-	/*PresentTimer = GetTickCount() - PresentTimer;
-	TotalTimer = GetTickCount() - TotalTimer;
-	d3dlog << EndTimer << "," << PresentTimer << "," << TotalTimer << endl;*/
+	//getGame()->debug.ExitSubProcess();
+	//getGame()->debug.ExitSubProcess();
 
     return;
 }
