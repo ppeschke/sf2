@@ -25,6 +25,7 @@ public:
 	KeyboardButton escape;
 	KeyboardButton p;	//pause
 	MouseInput mouse;
+	KeyboardButton enter;	//special ability
 
 };
 

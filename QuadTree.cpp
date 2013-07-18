@@ -253,14 +253,12 @@ void QuadTree::FindSupObjs(quadtreenode* qtn, list<BoundingBox*>& supObjs)
 
 void QuadTree::FineCollisionDetection(BoundingBox* a, list<BoundingBox*>& b)
 {
-	//thegame->messages.addMessage("Checking Fine", Color(randomNumber(0, 255)/255.0f, randomNumber(0, 255)/255.0f, randomNumber(0, 255)/255.0f));
 	for(list<BoundingBox*>::iterator checkIndex = b.begin(); checkIndex != b.end(); ++checkIndex)
 	{
 		if(sqrt(pow((a->owner->loc.x - (*checkIndex)->owner->loc.x), 2)
 			+ pow((a->owner->loc.y - (*checkIndex)->owner->loc.y), 2))
 			<= a->owner->mesh->radius + (*checkIndex)->owner->mesh->radius)		//within bounding circle
 		{
-			//thegame->messages.addMessage("Collision Detected", Color(1.0f, 1.0f, 1.0f));
 			thegame->debug.EnterSubProcess("OnCollision", 0);
 			thegame->gametype->onCollision(a->owner, (*checkIndex)->owner);
 			thegame->debug.ExitSubProcess();

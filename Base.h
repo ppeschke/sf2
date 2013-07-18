@@ -14,7 +14,7 @@ enum renderableType;
 class Base
 {
 public:
-	Base(unsigned int index, Player*, Vec2D location, Vec2D direction, bool collides = true, bool draw = true);
+	Base(unsigned int index, Player* player, Vec2D location, Vec2D direction, bool collides = true, bool draw = true);
 	virtual ~Base(void);
 	virtual void run(float deltaTime) = 0;
 	Mesh* CopyMesh(renderableType mT, const Color& C);

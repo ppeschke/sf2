@@ -9,6 +9,7 @@ using namespace std;
 class SpawnPoint;
 class Flag;
 class Ship;
+class WarpBeacon;
 
 class Team
 {
@@ -28,6 +29,7 @@ public:
 	SpawnPoint* spawnpoint;
 	Flag* flag;
 	Ship* carryingFlag;
+	WarpBeacon* wb;
 };
 
 #endif

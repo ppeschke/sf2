@@ -31,7 +31,7 @@ void LoadGraphics(Game* thegame)
 	LoadMesh("meshes\\flag.mesh", flag, 15);
 	LoadMesh("meshes\\target.mesh", target, 3);
 	LoadMesh("meshes\\directionalindicator.mesh", directionalIndicator, 15);
-	LoadMesh("meshes\\warp.mesh", warp, 15);
+	LoadMesh("meshes\\warp.mesh", warp, 20);
 	LoadMesh("meshes\\heavy.mesh", heavy, 16);
 	LoadMesh("meshes\\missile.mesh", missile, 15);
 	LoadMesh("meshes\\mf.mesh", mf, 10);
@@ -39,6 +39,7 @@ void LoadGraphics(Game* thegame)
 	LoadMesh("meshes\\sse.mesh", sse, 15);
 	LoadMesh("meshes\\spawnPoint.mesh", spawnPoint, 10);
 	LoadMesh("meshes\\hostileDrone.mesh", _hostileDrone, 3);
+	LoadMesh("meshes\\cloak.mesh", cloak, 250);
 
 	LoadTexture(L"textures\\fire.png", orangeCircle, 118, 89, 55);
 	LoadTexture(L"textures\\blueflame.png", blueCircle, 118, 89, 55);

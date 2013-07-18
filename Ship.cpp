@@ -10,7 +10,10 @@
 #include "hostileDrone.h"
 #include "Debris.h"
 
-Ship::Ship(unsigned int index, Player* o, renderableType i, Vec2D location, Vec2D direction, float maxspeed, float sensor, int hp, int weight, bool collides, bool draw) : Base(index, o, location, direction, collides, draw)
+typedef void(*pfunc)(Ship*);
+typedef void(*pfunc2)(Ship*);
+
+Ship::Ship(unsigned int index, Player* o, renderableType i, Vec2D location, Vec2D direction, float maxspeed, float sensor, int hp, int weight, pfunc pF, pfunc2 pF2, bool collides, bool draw) : Base(index, o, location, direction, collides, draw)
 {
 	mesh = CopyMesh(i, (o? getGameType()->teams[o->team].color:Color()));	//each object's mesh will have an individual color, so each has its own copy
 	if(collidable)
@@ -18,6 +21,12 @@ Ship::Ship(unsigned int index, Player* o, renderableType i, Vec2D location, Vec2
 		bb = new BoundingBox;
 		bb->Setup(loc.x - mesh->radius, loc.y + mesh->radius, mesh->radius * 2, this);
 	}
+
+	SpecialAbility = pF;
+	EndSpecialAbility = pF2;
+	abilityTimer = 0.0f;
+	abilityCooldownTimer = 0.0f;
+
 	maxSpeed = maxspeed;
 	mass = weight;
 	theta = 3.14159f/(mass < 35? 35:mass);	//limit on how fast you can turn
@@ -66,7 +75,6 @@ Ship::Ship(unsigned int index, Player* o, renderableType i, Vec2D location, Vec2
 			handledHere = false;
 		}
 	}
-	diff = Vec2D();
 }
 
 Ship::~Ship(void)
@@ -83,6 +91,16 @@ void Ship::run(float deltaTime)
 	}
 	InputData* id = &getGame()->inputdata;
 
+	//special abilitiy timers
+	if(abilityTimer > 0.0f)
+	{
+		abilityTimer -= deltaTime;
+		if(abilityTimer <= 0.0f && EndSpecialAbility != NULL)	//ability just ended its time
+			EndSpecialAbility(this);
+	}
+	else if(abilityCooldownTimer > 0.0f)
+		abilityCooldownTimer -= deltaTime;
+
 	if(this->owner == getGame()->pc)
 	{
 		if(hitpoints <= 0)
@@ -98,7 +116,10 @@ void Ship::run(float deltaTime)
 		{
 			if(id->up.downState || id->w.downState)
 			{
-				thrusting = true;	//for turning on thruster particle effects
+				if(SpecialAbility == &Cloak && abilityTimer > 0.0f)
+					thrusting = false;
+				else
+					thrusting = true;	//for turning on thruster particle effects
 				thrust(deltaTime);
 			}
 			else
@@ -112,11 +133,24 @@ void Ship::run(float deltaTime)
 				turnLeft(deltaTime);
 			if(id->right.downState || id->d.downState)
 				turnRight(deltaTime);
+			if(id->enter.hitEvent)
+			{
+				if(abilityCooldownTimer <= 0.0f && SpecialAbility != NULL)
+					SpecialAbility(this);
+				else if(SpecialAbility == NULL)
+					getGame()->messages.addMessage("No special ability for this ship!");
+				else
+					getGame()->messages.addMessage("Special ability is not available!");
+				id->enter.ResetEvent();
+			}
 		}
 	}
 
 	vel += acc;
-	vel.limit(maxSpeed);
+	if(abilityTimer > 0.0f)	//special ability is active
+		vel.limit(abilityVelLimit);
+	else
+		vel.limit(maxSpeed);
 
 	//if(this->owner == getGame()->pc)
 	//{

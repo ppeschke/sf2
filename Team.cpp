@@ -5,6 +5,7 @@ Team::Team()
 	spawnpoint = NULL;
 	flag = NULL;
 	carryingFlag = NULL;
+	wb = NULL;
 	points = 0;
 	playersAllowed = 1;
 }

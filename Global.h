@@ -93,3 +93,8 @@ void Input(Game* thegame);
 //Init.cpp
 void Menu(Game* thegame);
 void SplashScreen(Game* thegame);
+
+//SpecialAbilities.cpp
+void SpawnWarpField(Ship*);
+void Cloak(Ship* s);
+void Uncloak(Ship* s);

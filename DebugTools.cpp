@@ -12,7 +12,7 @@ DebugTools::DebugTools(unsigned int frameThreshold, debugLevel dl)
 
 DebugTools::~DebugTools(void)
 {
-	Output();
+	//Output();
 	//delete frames
 	for(vector<_Process*>::iterator index = frames.begin(); index != frames.end(); ++index)
 		CleanupProcess(*index);

@@ -6,21 +6,25 @@
 class Ship : public Base
 {
 public:
-	Ship(unsigned int index, Player* o, renderableType i, Vec2D location, Vec2D direction, float maxspeed, float sensors, int hitpoints, int weight, bool collides = true, bool draw = true);
+	Ship(unsigned int index, Player* o, renderableType i, Vec2D location, Vec2D direction, float maxspeed, float sensors, int hitpoints, int weight, void (*pfunc)(Ship*), void (*pfunc2)(Ship*), bool collides = true, bool draw = true);
 	virtual ~Ship(void);
 	int hitpoints;
 	int maxHitpoints;
 	float theta;    // directional angle
 	//float thrustForce;
 	float maxSpeed;
-	Vec2D diff;	//this is for AI and should be deleted after this semester is over (AI needs to be deleted too)
 
 	float sensorStrength;
 	int mass;
 	float spawnTimer;
 	Weapon* weapon;
-  
-	// default states
+
+	void (*SpecialAbility)(Ship*);
+	void (*EndSpecialAbility)(Ship*);
+	float abilityTimer;
+	float abilityCooldownTimer;
+	float abilityVelLimit;
+
 	bool thrusting;
 	Vec2D target;
 	Base* targetObj;

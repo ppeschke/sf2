@@ -55,6 +55,7 @@ void Input(Game* thegame)
 		keymacro(Keys[DIK_R], r);
 		keymacro(Keys[DIK_H], h);
 		keymacro(Keys[DIK_ESCAPE], escape);
+		keymacro(Keys[DIK_RETURN], enter);
 
 		id->mouse.coords = Vec2D((float)Mouse.lX, (float)(thegame->invertYaxis?Mouse.lY:-Mouse.lY));
 
