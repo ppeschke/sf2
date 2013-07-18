@@ -6,7 +6,7 @@
 class CloakField : public Base
 {
 public:
-	CloakField(unsigned int index, Player* player, Vec2D location, Vec2D direction, float time, bool collides = true, bool draw = true);
+	CloakField(unsigned int index, Player* player, Vec2D location, Vec2D direction, float time, bool collides = true, bool draw = false);
 	virtual ~CloakField(void);
 
 	virtual void run(float deltaTime);
