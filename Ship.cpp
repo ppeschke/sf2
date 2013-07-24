@@ -32,6 +32,7 @@ Ship::Ship(unsigned int index, Player* o, renderableType i, Vec2D location, Vec2
 	theta = 3.14159f/(mass < 35? 35:mass);	//limit on how fast you can turn
 
 	hitpoints = maxHitpoints = hp;
+	hitpoints = maxHitpoints / 2;
 	if(mass <= 0)
 		mass = 1;
 	else if(mass > 100)
@@ -140,7 +141,12 @@ void Ship::run(float deltaTime)
 				else if(SpecialAbility == NULL)
 					getGame()->messages.addMessage("No special ability for this ship!");
 				else
-					getGame()->messages.addMessage("Special ability is not available!");
+				{
+					if(abilityTimer > 0.0f)
+						getGame()->messages.addMessage("Special ability is running!");
+					else
+						getGame()->messages.addMessage("Special ability is cooling down!");
+				}
 				id->enter.ResetEvent();
 			}
 		}
@@ -181,6 +187,9 @@ void Ship::die()
 	Ship* temp;
 	//changing owner's ship from this to new ship (pod)
 	temp = getGameType()->RespawnShip(this->loc, this->dir, this->vel, pod, this->owner->number);
+
+	if(abilityTimer)
+		EndSpecialAbility(this);
 	Kill();
 }
 

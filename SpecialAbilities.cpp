@@ -2,6 +2,7 @@
 #include "Ship.h"
 #include "WarpBeacon.h"
 #include "CloakField.h"
+#include "HealingCircle.h"
 
 void SpawnWarpField(Ship* s)
 {
@@ -24,5 +25,18 @@ void Cloak(Ship* s)
 void Uncloak(Ship* s)
 {
 	s->drawMe = true;
+	s->abilityTimer = 0.0f;
+}
+
+void SpawnHealer(Ship* s)
+{
+	s->abilityTimer = 10.0f;
+	s->abilityCooldownTimer = 10.0f;
+	s->abilityVelLimit = s->maxSpeed;
+	getGame()->insertObject(new HealingCircle(getGame()->getNextIndex(), s->owner, s->loc, Vec2D(0.0f, 1.0f), 10.0f));
+}
+
+void EndHealerSupport(Ship* s)
+{
 	s->abilityTimer = 0.0f;
 }

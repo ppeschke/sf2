@@ -17,9 +17,10 @@ using namespace std;
 #include "ShipExplosion.h"
 #include "StarField.h"
 #include "CloakField.h"
+#include "HealingCircle.h"
 //need to include all types of leaf objects in the object tree structure thingy
 
-string meshes[] = {"none", "pod", "scout", "scout2", "scout3", "recon", "recon2", "recon3", "heavy", "heavy2", "heavy3", "sniper", "sniper2", "sniper3", "ewar", "ewar2", "ewar3", "logistics", "logistics2", "logistics3", "drone", "base", "flag", "target", "directionalIndicator", "cloak", "warp", "missile", "bullet", "mf", "sse", "orangecircle", "bluecircle", "darkbluecircle"};
+string meshes[] = {"none", "pod", "scout", "scout2", "scout3", "recon", "recon2", "recon3", "heavy", "heavy2", "heavy3", "sniper", "sniper2", "sniper3", "ewar", "ewar2", "ewar3", "logistics", "logistics2", "logistics3", "drone", "base", "flag", "target", "directionalIndicator", "cloak", "warp", "heal", "missile", "bullet", "mf", "sse", "orangecircle", "bluecircle", "darkbluecircle"};
 
 GameType::GameType(void)
 {
@@ -205,7 +206,7 @@ Ship* GameType::RespawnShip(Vec2D loc, Vec2D dir, Vec2D vel, renderableType mT, 
 		temp = new Ship(g->getNextIndex(), g->players[playerNum], ewar2, loc, dir, 264.0f, 300.0f, 120, 30, NULL, NULL);
 		break;
 	case logistics:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], logistics, loc, dir, 308.0f, 400.0f, 145, 45, NULL, NULL);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], logistics, loc, dir, 308.0f, 400.0f, 145, 45, &SpawnHealer, &EndHealerSupport);
 		break;
 	case logistics2:
 		temp = new Ship(g->getNextIndex(), g->players[playerNum], logistics2, loc, dir, 308.0f, 400.0f, 240, 45, NULL, NULL);
@@ -416,6 +417,26 @@ void GameType::onCollision(Base* a, Base* b)
 		if(b->owner->ship != a)
 		{
 			b->Kill();
+		}
+	}
+	else if(typeid(*a) == typeid(Ship) && typeid(*b) == typeid(HealingCircle) || typeid(*a) == typeid(HealingCircle) && typeid(*b) == typeid(Ship))
+	{
+		if(typeid(*a) == typeid(HealingCircle))
+		{
+			Base* temp = a;
+			a = b;
+			b = temp;
+		}
+		//a is now pointing to a Ship
+		if(teams[b->owner->team].number == teams[a->owner->team].number)
+		{
+			if(((Ship*)a)->hitpoints < ((Ship*)a)->maxHitpoints && ((HealingCircle*)b)->hitpoints > 0)
+			{
+				++(((Ship*)a)->hitpoints);
+				--(((HealingCircle*)b)->hitpoints);
+				if(((HealingCircle*)b)->hitpoints == 0)
+					b->Kill();
+			}
 		}
 	}
 	else if(typeid(*a) == typeid(Ship) && typeid(*b) == typeid(SpawnPoint) || typeid(*a) == typeid(SpawnPoint) && typeid(*b) == typeid(Ship))
