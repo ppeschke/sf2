@@ -41,6 +41,7 @@ void LoadGraphics(Game* thegame)
 	LoadMesh("meshes\\hostileDrone.mesh", _hostileDrone, 3);
 	LoadMesh("meshes\\cloak.mesh", cloak, 250);
 	LoadMesh("meshes\\heal.mesh", heal, 25);
+	LoadMesh("meshes\\empbomb.mesh", empbomb, 100);
 
 	LoadTexture(L"textures\\fire.png", orangeCircle, 118, 89, 55);
 	LoadTexture(L"textures\\blueflame.png", blueCircle, 118, 89, 55);

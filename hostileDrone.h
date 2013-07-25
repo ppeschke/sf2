@@ -8,7 +8,7 @@ class Weapon;
 class hostileDrone : public Base
 {
 public:
-	hostileDrone(unsigned int index, Player* o, renderableType mesh, Vec2D loc, Vec2D dir, Ship* chase, bool collides = false, bool draw = true);
+	hostileDrone(unsigned int index, Player* o, renderableType mesh, Vec2D loc, Vec2D dir, Ship* chase, bool collides = true, bool draw = true);
 	virtual ~hostileDrone(void);
 
 	virtual void run(float deltaTime);

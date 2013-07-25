@@ -18,9 +18,12 @@ using namespace std;
 #include "StarField.h"
 #include "CloakField.h"
 #include "HealingCircle.h"
+#include "EMPBomb.h"
+#include "Drone.h"
+#include "hostileDrone.h"
 //need to include all types of leaf objects in the object tree structure thingy
 
-string meshes[] = {"none", "pod", "scout", "scout2", "scout3", "recon", "recon2", "recon3", "heavy", "heavy2", "heavy3", "sniper", "sniper2", "sniper3", "ewar", "ewar2", "ewar3", "logistics", "logistics2", "logistics3", "drone", "base", "flag", "target", "directionalIndicator", "cloak", "warp", "heal", "missile", "bullet", "mf", "sse", "orangecircle", "bluecircle", "darkbluecircle"};
+string meshes[] = {"none", "pod", "scout", "scout2", "scout3", "recon", "recon2", "recon3", "heavy", "heavy2", "heavy3", "sniper", "sniper2", "sniper3", "ewar", "ewar2", "ewar3", "logistics", "logistics2", "logistics3", "drone", "base", "flag", "target", "directionalIndicator", "cloak", "warp", "heal", "emp bomb", "missile", "bullet", "mf", "sse", "orangecircle", "bluecircle", "darkbluecircle"};
 
 GameType::GameType(void)
 {
@@ -197,7 +200,7 @@ Ship* GameType::RespawnShip(Vec2D loc, Vec2D dir, Vec2D vel, renderableType mT, 
 		temp = new Ship(g->getNextIndex(), g->players[playerNum], sniper, loc, dir, 220.0f, 500.0f, 120, 60, NULL, NULL);
 		break;
 	case ewar:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], ewar, loc, dir, 176.0f, 300.0f, 80, 30, NULL, NULL);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], ewar, loc, dir, 176.0f, 300.0f, 80, 30, &SpawnEMPBomb, NULL);
 		break;
 	case ewar2:
 		temp = new Ship(g->getNextIndex(), g->players[playerNum], ewar2, loc, dir, 220.0f, 300.0f, 100, 30, NULL, NULL);
@@ -344,6 +347,25 @@ void GameType::onCollision(Base* a, Base* b)
 		rVelB = (aCompEffect*(float)(sa->mass) + bCompEffect*(float)(sb->mass) + (aCompEffect - bCompEffect)*(float)(sa->mass)*cor)/(float)(sa->mass + sb->mass);
 		sa->vel = rVelA + aCompDorm;
 		sb->vel = rVelB + bCompDorm;
+	}
+	else if(typeid(*a) == typeid(EMPBomb) || typeid(*b) == typeid(EMPBomb))
+	{
+		if(typeid(*a) != typeid(EMPBomb))
+		{
+			Base* temp = a;
+			a = b;
+			b = temp;
+		}
+		//a now points to the EMP bomb, no matter what
+		if(typeid(*b) == typeid(Missile) || typeid(*b) == typeid(Drone) || typeid(*b) == typeid(hostileDrone))
+		{
+			b->Kill();
+		}
+		else if(typeid(*b) == typeid(EMPBomb))
+		{
+			a->Kill();
+			b->Kill();
+		}
 	}
 	else if(typeid(*a) == typeid(Missile) && typeid(*b) == typeid(Ship) || typeid(*a) == typeid(Ship) && typeid(*b) == typeid(Missile))
 	{

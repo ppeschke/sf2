@@ -3,6 +3,7 @@
 #include "WarpBeacon.h"
 #include "CloakField.h"
 #include "HealingCircle.h"
+#include "EMPBomb.h"
 
 void SpawnWarpField(Ship* s)
 {
@@ -39,4 +40,12 @@ void SpawnHealer(Ship* s)
 void EndHealerSupport(Ship* s)
 {
 	s->abilityTimer = 0.0f;
+}
+
+void SpawnEMPBomb(Ship* s)
+{
+	s->abilityTimer = 10.0f;
+	s->abilityCooldownTimer = 10.0f;
+	s->abilityVelLimit = 0.0f;
+	getGame()->insertObject(new EMPBomb(getGame()->getNextIndex(), s->owner, s->loc, Vec2D(0.0f, 1.0f), 10.0f));
 }
