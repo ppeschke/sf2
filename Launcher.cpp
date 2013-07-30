@@ -31,7 +31,7 @@ void Launcher::shoot()
 	if(Timer <= 0.0f)
 	{
 		getGame()->debug.AddEvent("Shooting");
-		Timer = ROF;
+		Timer = (owner->ship->abilityTimer > 0.0f? owner->ship->abilityROF:ROF);
 		Base* temp;
 		switch(shootWhat)
 		{

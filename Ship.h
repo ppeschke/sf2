@@ -24,6 +24,7 @@ public:
 	float abilityTimer;
 	float abilityCooldownTimer;
 	float abilityVelLimit;
+	float abilityROF;
 
 	bool thrusting;
 	Vec2D target;

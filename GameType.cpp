@@ -182,7 +182,7 @@ Ship* GameType::RespawnShip(Vec2D loc, Vec2D dir, Vec2D vel, renderableType mT, 
 		temp = new Ship(g->getNextIndex(), g->players[playerNum], recon, loc, dir, 352.0f, 450.0f, 100, 40, NULL, NULL);
 		break;
 	case heavy:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], heavy, loc, dir, 176.0f, 450.0f, 90, 90, NULL, NULL);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], heavy, loc, dir, 176.0f, 450.0f, 90, 90, &StartBarrage, &EndBarrage);
 		break;
 	case heavy2:
 		temp = new Ship(g->getNextIndex(), g->players[playerNum], heavy, loc, dir, 176.0f, 450.0f, 120, 70, NULL, NULL);

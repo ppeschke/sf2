@@ -101,3 +101,5 @@ void Uncloak(Ship* s);
 void SpawnHealer(Ship* s);
 void EndHealerSupport(Ship* s);
 void SpawnEMPBomb(Ship* s);
+void StartBarrage(Ship* s);
+void EndBarrage(Ship* s);
