@@ -21,9 +21,10 @@ using namespace std;
 #include "EMPBomb.h"
 #include "Drone.h"
 #include "hostileDrone.h"
+#include "DamageCircle.h"
 //need to include all types of leaf objects in the object tree structure thingy
 
-string meshes[] = {"none", "pod", "scout", "scout2", "scout3", "recon", "recon2", "recon3", "heavy", "heavy2", "heavy3", "sniper", "sniper2", "sniper3", "ewar", "ewar2", "ewar3", "logistics", "logistics2", "logistics3", "drone", "base", "flag", "target", "directionalIndicator", "cloak", "warp", "heal", "emp bomb", "missile", "bullet", "mf", "sse", "orangecircle", "bluecircle", "darkbluecircle"};
+string meshes[] = {"none", "pod", "scout", "scout2", "scout3", "recon", "recon2", "recon3", "heavy", "heavy2", "heavy3", "sniper", "sniper2", "sniper3", "ewar", "ewar2", "ewar3", "logistics", "logistics2", "logistics3", "drone", "base", "flag", "target", "directionalIndicator", "cloak", "warp", "heal", "emp bomb", "damage circle", "missile", "bullet", "mf", "sse", "orangecircle", "bluecircle", "darkbluecircle"};
 
 GameType::GameType(void)
 {
@@ -191,7 +192,7 @@ Ship* GameType::RespawnShip(Vec2D loc, Vec2D dir, Vec2D vel, renderableType mT, 
 		temp = new Ship(g->getNextIndex(), g->players[playerNum], heavy, loc, dir, 176.0f, 450.0f, 180, 70, NULL, NULL);
 		break;
 	case sniper:
-		temp = new Ship(g->getNextIndex(), g->players[playerNum], sniper, loc, dir, 220.0f, 500.0f, 50, 60, NULL, NULL);
+		temp = new Ship(g->getNextIndex(), g->players[playerNum], sniper, loc, dir, 220.0f, 500.0f, 50, 60, &SpawnDamager, &EndDamageSupport);
 		break;
 	case sniper2:
 		temp = new Ship(g->getNextIndex(), g->players[playerNum], sniper, loc, dir, 220.0f, 500.0f, 100, 60, NULL, NULL);
@@ -348,7 +349,7 @@ void GameType::onCollision(Base* a, Base* b)
 		sa->vel = rVelA + aCompDorm;
 		sb->vel = rVelB + bCompDorm;
 	}
-	else if(typeid(*a) == typeid(EMPBomb) || typeid(*b) == typeid(EMPBomb))
+	else if(typeid(*a) == typeid(EMPBomb) || typeid(*b) == typeid(EMPBomb))	//this needs to stay near the top so EMP Bombs can take precedence
 	{
 		if(typeid(*a) != typeid(EMPBomb))
 		{
@@ -365,6 +366,27 @@ void GameType::onCollision(Base* a, Base* b)
 		{
 			a->Kill();
 			b->Kill();
+		}
+		//TODO: add support for shutting down other special abilities
+	}
+	else if(typeid(*a) == typeid(DamageCircle) && typeid(*b) == typeid(Ship) || typeid(*a) == typeid(Ship) && typeid(*b) == typeid(DamageCircle))
+	{
+		if(typeid(*a) == typeid(DamageCircle))
+		{
+			Base* temp = a;
+			a = b;
+			b = temp;
+		}
+		//a now points to a Ship, no matter what
+		if(teams[a->owner->team].number != teams[b->owner->team].number)
+		{
+			if(((Ship*)a)->hitpoints > 0 && ((DamageCircle*)b)->hitpoints > 0)
+			{
+				--(((Ship*)a)->hitpoints);
+				--(((DamageCircle*)b)->hitpoints);
+				if(((DamageCircle*)b)->hitpoints == 0)
+					b->Kill();
+			}
 		}
 	}
 	else if(typeid(*a) == typeid(Missile) && typeid(*b) == typeid(Ship) || typeid(*a) == typeid(Ship) && typeid(*b) == typeid(Missile))

@@ -103,3 +103,5 @@ void EndHealerSupport(Ship* s);
 void SpawnEMPBomb(Ship* s);
 void StartBarrage(Ship* s);
 void EndBarrage(Ship* s);
+void SpawnDamager(Ship* s);
+void EndDamageSupport(Ship* s);

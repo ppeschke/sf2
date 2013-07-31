@@ -4,6 +4,7 @@
 #include "CloakField.h"
 #include "HealingCircle.h"
 #include "EMPBomb.h"
+#include "DamageCircle.h"
 
 void SpawnWarpField(Ship* s)
 {
@@ -58,12 +59,25 @@ void StartBarrage(Ship* s)
 {
 	s->abilityTimer = 10.0f;
 	s->abilityROF = 0.5f;
-	s->abilityCooldownTimer = 10.0f;
+	s->abilityCooldownTimer = 20.0f;
 	s->abilityVelLimit = s->maxSpeed;
-	getGame()->messages.addMessage("Barrage has begun!");
 }
 
 void EndBarrage(Ship* s)
+{
+	s->abilityTimer = 0.0f;
+}
+
+void SpawnDamager(Ship* s)
+{
+	s->abilityTimer = 10.0f;
+	s->abilityCooldownTimer = 10.0f;
+	s->abilityVelLimit = s->maxSpeed;
+	s->abilityROF = s->weapon->ROF;
+	getGame()->insertObject(new DamageCircle(getGame()->getNextIndex(), s->owner, s->loc, Vec2D(0.0f, 1.0f), 10.0f));
+}
+
+void EndDamageSupport(Ship* s)
 {
 	s->abilityTimer = 0.0f;
 }

@@ -101,19 +101,19 @@ void Ship::run(float deltaTime)
 	}
 	else if(abilityCooldownTimer > 0.0f)
 		abilityCooldownTimer -= deltaTime;
+	if(hitpoints <= 0)
+	{
+		getGame()->debug.AddEvent("Ship died");
+		die();
+		//explosion
+		getGame()->insertObject(new ShipExplosion(getGame()->getNextIndex(), this->loc, (int)this->mesh->radius));
+		//debris
+		getGame()->insertObject(new Debris(this, this->owner, this->loc, this->dir, false, true));
+	}
 
 	if(this->owner == getGame()->pc)
 	{
-		if(hitpoints <= 0)
-		{
-			getGame()->debug.AddEvent("Ship died");
-			die();
-			//explosion
-			getGame()->insertObject(new ShipExplosion(getGame()->getNextIndex(), this->loc, (int)this->mesh->radius));
-			//debris
-			getGame()->insertObject(new Debris(this, this->owner, this->loc, this->dir, false, true));
-		}
-		else
+		if(!dead)
 		{
 			if(id->up.downState || id->w.downState)
 			{

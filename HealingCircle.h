@@ -10,6 +10,7 @@ public:
 	virtual ~HealingCircle(void);
 
 	virtual void run(float deltaTime);
+	virtual void endStep(float deltaTime);
 	virtual void Kill();
 
 	float lifetime;

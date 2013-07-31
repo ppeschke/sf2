@@ -12,7 +12,7 @@ enum renderableType {
 	sniper, sniper2, sniper3,
 	ewar, ewar2, ewar3,
 	logistics, logistics2, logistics3,
-	drone, _hostileDrone, spawnPoint, flag, target, directionalIndicator, cloak, warp, heal, empbomb, missile, bullet, mf, sse,
+	drone, _hostileDrone, spawnPoint, flag, target, directionalIndicator, cloak, warp, heal, empbomb, damage, missile, bullet, mf, sse,
 	orangeCircle, blueCircle, darkBlueCircle, star,
 	healthBar, healthBarOrange, healthBarRed, healthBarOutline, speedBar, speedBarOutline,
 	otherPlayerHealthOutline, otherPlayerHealthBar, otherPlayerHealthBarOrange, otherPlayerHealthBarRed,

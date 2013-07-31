@@ -24,8 +24,12 @@ HealingCircle::~HealingCircle(void)
 
 void HealingCircle::run(float deltaTime)
 {
+}
+
+void HealingCircle::endStep(float deltaTime)
+{
 	lifetime -= deltaTime;
-	if(lifetime <= 0.0f || hitpoints == 0)
+	if(lifetime <= 0.0f || hitpoints == 0 || owner->ship->abilityTimer <= 0.0f || owner->ship->dead)
 	{
 		Kill();
 	}

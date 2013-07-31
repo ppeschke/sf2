@@ -7,17 +7,22 @@ Bug Fixes:
 + Fix particle effect rendering (slant at edges of screen)
 - Figure out why explosions are just fuzz sound
 + Fix get3DScreenEdges so camera is set to origin before and replaced after
+
 Efficiency Issues:
 + Make arena into a mesh object so that it doesn't have to load into VRam every frame
 + Fix "Vec2D Get3DScreenEdges()" (direct3D.cpp) so that it is more efficient
 - tighten up the ParticleEffect logic so that they don't run so many particles if time is short
 + Get everything to update based on deltaTime
+
 Sound:
 - Get some good sounds
 - Get some good music
+
 Graphics:
 - Finish creating meshes
+
 Gameplay:
-- Add class specializations for different ships
++ Add class specializations for different ships
+
 Network & Multiplayer:
 - Impliment Client/Server... heh
