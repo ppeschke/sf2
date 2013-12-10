@@ -32,7 +32,6 @@ Ship::Ship(unsigned int index, Player* o, renderableType i, Vec2D location, Vec2
 	theta = 3.14159f/(mass < 35? 35:mass);	//limit on how fast you can turn
 
 	hitpoints = maxHitpoints = hp;
-	hitpoints = maxHitpoints / 2;
 	if(mass <= 0)
 		mass = 1;
 	else if(mass > 100)

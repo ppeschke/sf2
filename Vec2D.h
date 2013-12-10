@@ -1,6 +1,11 @@
 #ifndef VEC2D_H
 #define VEC2D_H
 
+/*
+SPECIAL THANKS TO: John "Zach" Tucker for his early work on the Vec2D class. Some corrections and additions have been made,
+but most of the credit for this class goes to him.
+*/
+
 #include <string>
 using namespace std;
 
@@ -42,7 +47,7 @@ public:
 	Vec2D operator+(const Vec2D& right) const;
 	Vec2D operator+=(const Vec2D& right);
 	Vec2D operator-(const Vec2D& right) const;
-	Vec2D operator -= (const Vec2D& right);
+	Vec2D operator-= (const Vec2D& right);
 	Vec2D operator/(const float& right) const;
 	Vec2D operator*(const float& right) const;
 	Vec2D operator*=(const float& right);

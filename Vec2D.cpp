@@ -2,6 +2,11 @@
 #include "Math.h"
 const double PI = 4.0*atan(1.0);
 
+/*
+SPECIAL THANKS TO: John "Zach" Tucker for his early work on the Vec2D class. Some corrections and additions have been made,
+but most of the credit for this class goes to him.
+*/
+
 Vec2D::Vec2D(void)
 {
 	x = 0;

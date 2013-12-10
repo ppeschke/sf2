@@ -311,6 +311,9 @@ Ship* GameType::SpawnShip(renderableType mT, unsigned int playerNum, Vec2D dir, 
 
 void GameType::onCollision(Base* a, Base* b)
 {
+	//typeid is (constants) generated at compile time, whereas dynamic_cast is done at run time
+	//so tyepid is faster
+	//typeid also returns an exact match, whereas dynamic_cast returns a match to this class or any subclass
 	getGame()->debug.AddEvent(string("Collision of ") + typeid(*a).name() + " and " + typeid(*b).name());
 	if(a->dead || b->dead)
 		return;
