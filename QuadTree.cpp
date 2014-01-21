@@ -227,10 +227,16 @@ void QuadTree::Check(BoundingBox* bb)
 	thegame->debug.EnterSubProcess("AddThisNode", 0);
 	if(bb->myNode->objs.size() > 1)
 	{
+		bool found = false;
 		for(list<BoundingBox*>::iterator index = bb->myNode->objs.begin(); index != bb->myNode->objs.end(); ++index)
 		{
-			if((*index) != bb)
-				supObjs.insert(supObjs.end(), *index);	//add everyone else in this qtn except for me
+			if((*index) == bb)
+			{
+				found = true;
+				continue;
+			}
+			if(found)
+				supObjs.insert(supObjs.end(), *index);	//add everyone else in this qtn after me
 		}
 	}
 	thegame->debug.ExitSubProcess();
