@@ -31,7 +31,10 @@ void Launcher::shoot()
 	if(Timer <= 0.0f)
 	{
 		getGame()->debug.AddEvent("Shooting");
-		Timer = (owner->ship->abilityTimer > 0.0f? owner->ship->abilityROF:ROF);
+		if(owner != NULL)
+			Timer = (owner->ship->abilityTimer > 0.0f ? owner->ship->abilityROF : ROF);
+		else
+			Timer = 80.0f;	//80 is the default ROF for hostile drones (spawned by the  game in Ship::run)
 		Base* temp;
 		switch(shootWhat)
 		{

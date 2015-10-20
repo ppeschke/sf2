@@ -26,7 +26,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	thegame.Setup();
 
 	//thegame->gameType->OnStart(&thegame); was moved to StartGame() which is called by the button you press to select a gametype
-	LoopSound(NULL);
+	//LoopSound(NULL);
 	Loop(&thegame);
 
 	CloseDirect3D();

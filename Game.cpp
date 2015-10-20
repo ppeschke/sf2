@@ -151,7 +151,7 @@ void Game::reconcileObjects()
 		
 		while(firstFreeIndex <= 9999 && objects[firstFreeIndex] != NULL)
 			++firstFreeIndex;
-		if(firstFreeIndex == 9999)
+		if(firstFreeIndex > 9999)
 			exit(EXIT_FAILURE);	//crash hard
 
 		if((*index)->collidable)
