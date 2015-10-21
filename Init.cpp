@@ -13,7 +13,7 @@ void Menu(Game* thegame)
 }
 
 void SplashScreen(Game* thegame)
-{	
+{
 	DWORD Timer = GetTickCount();
 	DWORD Count = 0;
 	int c = 0;
@@ -21,6 +21,7 @@ void SplashScreen(Game* thegame)
 	//fade in and squish the letters together
 	while(HandleMessages() && Count < 3000)
 	{
+		getGame()->debug.StartFrame();
 		if(c < 255)
 			++c;
 		if(in < 10 && c % 5 == 0)
@@ -35,6 +36,7 @@ void SplashScreen(Game* thegame)
 		Draw2DLine(-70, 30, -70, -30, D3DCOLOR_XRGB(0, c, 0));
 		EndRender();
 		Count = GetTickCount() - Timer;
+		getGame()->debug.EndFrame();
 	}
 	//fade out
 	while(HandleMessages() && c >= 0)

@@ -8,6 +8,9 @@
 
 Game::Game(void) : collisionDetection(4096, 5), debug(33, warning)
 {
+	gametype = NULL;
+	arena = NULL;
+	sf = NULL;
 	state = starting;
 	messages.x = 5;
 	messages.y = 5;

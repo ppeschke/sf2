@@ -11,7 +11,7 @@
 #include "GameWindow.h"
 #include "GameType.h"
 #include "Particle.h"
-#include "Game.h"
+#include "NetworkAgent.h"
 
 class Sprite;
 //class Sound;

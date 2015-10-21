@@ -1,5 +1,7 @@
 #include "Global.h"
 #include "Player.h"
+#include "NetworkServer.h"
+#include "NetworkClient.h"
 
 #include <time.h>
 #include <sstream>
@@ -10,28 +12,26 @@ void DisplayWindow(GameWindow* gw, HINSTANCE hInstance, int nCmdShow);
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 string gameStates[] = {"starting", "running", "choosingShip", "settings", "paused", "over", "quitting", "debugHolding", "debugMoving"};
 
-Game thegame;
+//Game thegame;
+NetworkAgent* agent;	//the network agent will contain the game now
 
 // Starting Point
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	if(strcmp("Server", lpCmdLine) != 0)
+		agent = new NetworkServer();
+	else
+		agent = new NetworkClient();
 	srand((unsigned int)time(NULL));
 	//randomFloat(0.0f, 0.0f);randomFloat(0.0f, 0.0f);	//getting the randomness primed
-	DisplayWindow(&thegame.gWindow, hInstance, nCmdShow);
+	DisplayWindow(&getGame()->gWindow, hInstance, nCmdShow);	//have to have a window before setting up direct3D
+	agent->Setup(hInstance);
+	agent->Loop();
+	//Loop(&thegame);
 
-	LoadGraphics(&thegame);
-	LoadSounds(&thegame);
-	InitDirectInput(hInstance, &thegame);
-	//SplashScreen(&thegame);
-	thegame.Setup();
+	agent->Teardown();
 
-	//thegame->gameType->OnStart(&thegame); was moved to StartGame() which is called by the button you press to select a gametype
-	//LoopSound(NULL);
-	Loop(&thegame);
-
-	CloseDirect3D();
-	CloseDirectInput();
-	CloseXAudio();
+	delete agent;
 
 	return 0;
 }
@@ -83,7 +83,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
         case WM_DESTROY:
             {
                 PostQuitMessage(0);
-				thegame.state = quitting;
+				getGame()->state = quitting;
                 return 0;
             } break;
     }
@@ -93,12 +93,12 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
 inline Game* getGame()
 {
-	return &thegame;
+	return &agent->theGame;
 }
 
 GameType* getGameType()
 {
-	return thegame.gametype;
+	return agent->theGame.gametype;
 }
 
 int randomNumber(int low, int high)
@@ -157,9 +157,9 @@ float Distance(const Vec2D& a, const Vec2D& b)
 void changeGameMode(int gm)
 {
 	stringstream ss;
-	thegame.state = (gameState)gm;
-	ss << "Game mode changed to " << gameStates[(int)thegame.state];
-	thegame.debug.AddEvent(ss.str());
+	getGame()->state = (gameState)gm;
+	ss << "Game mode changed to " << gameStates[(int)getGame()->state];
+	getGame()->debug.AddEvent(ss.str());
 	if((gameState)gm == choosingShip)
 		getGame()->chooseShipMenu.pointer->coords = getGame()->gametype->settingsMenu.pointer->coords;
 }
@@ -170,19 +170,19 @@ void GoToSettings(int gameType)
 	switch(gameType)
 	{
 	case ffa:
-		thegame.gametype = NULL;
+		getGame()->gametype = NULL;
 		break;
 	case ctf:
-		thegame.gametype = new GameType;
+		getGame()->gametype = new GameType;
 		break;
 	}
-	thegame.gametype->settingsMenu.pointer->coords = thegame.menu.pointer->coords;
+	getGame()->gametype->settingsMenu.pointer->coords = getGame()->menu.pointer->coords;
 }
 
 void StartGame(int gameType)
 {
 	changeGameMode(running);
-	thegame.gametype->OnStart(&thegame);
+	getGame()->gametype->OnStart(getGame());
 }
 
 void ChangeGameObjective(int points)
@@ -204,6 +204,6 @@ string itos(int i)
 
 void MakeNewShip(int i)
 {
-	thegame.ChangeShip(thegame.gametype->RespawnShip(thegame.temploc, thegame.tempdir, thegame.tempvel, renderableType(i), thegame.pc->number));
+	getGame()->ChangeShip(getGame()->gametype->RespawnShip(getGame()->temploc, getGame()->tempdir, getGame()->tempvel, renderableType(i), getGame()->pc->number));
 	changeGameMode(running);
 }
