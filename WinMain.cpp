@@ -1,7 +1,7 @@
 #include "Global.h"
 #include "Player.h"
-#include "NetworkServer.h"
-#include "NetworkClient.h"
+#include "Server.h"
+#include "Client.h"
 
 #include <time.h>
 #include <sstream>
@@ -19,9 +19,9 @@ NetworkAgent* agent;	//the network agent will contain the game now
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	if(strcmp("Server", lpCmdLine) != 0)
-		agent = new NetworkServer();
+		agent = new Server();
 	else
-		agent = new NetworkClient();
+		agent = new Client();
 	srand((unsigned int)time(NULL));
 	//randomFloat(0.0f, 0.0f);randomFloat(0.0f, 0.0f);	//getting the randomness primed
 	DisplayWindow(&getGame()->gWindow, hInstance, nCmdShow);	//have to have a window before setting up direct3D

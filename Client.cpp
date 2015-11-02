@@ -1,4 +1,4 @@
-#include "NetworkClient.h"
+#include "Client.h"
 
 #include "GameType.h"
 
@@ -14,15 +14,15 @@ void CloseDirectInput();
 void CloseDirect3D();
 void CloseXAudio();
 
-NetworkClient::NetworkClient() : NetworkAgent()
+Client::Client() : NetworkAgent()
 {
 }
 
-NetworkClient::~NetworkClient()
+Client::~Client()
 {
 }
 
-void NetworkClient::Setup(HINSTANCE hInstance)
+void Client::Setup(HINSTANCE hInstance)
 {
 	LoadGraphics(&theGame);
 	LoadSounds(&theGame);
@@ -33,14 +33,14 @@ void NetworkClient::Setup(HINSTANCE hInstance)
 	//LoopSound(NULL);
 }
 
-void NetworkClient::Teardown()
+void Client::Teardown()
 {
 	CloseDirect3D();
 	CloseDirectInput();
 	CloseXAudio();
 }
 
-void NetworkClient::Loop()
+void Client::Loop()
 {
 	Game* thegame = &this->theGame;	//saving myself from rewriting all the code in this function (it originally came from Loop.cpp)
 	DWORD startingPoint = GetTickCount();
@@ -178,12 +178,12 @@ void NetworkClient::Loop()
 	//log.close();
 }
 
-void NetworkClient::Input()
+void Client::Input()
 {
 	::Input(&theGame);
 }
 
-void NetworkClient::Output()
+void Client::Output()
 {
 	::Render(&theGame);
 }

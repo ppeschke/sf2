@@ -1,13 +1,13 @@
-#ifndef NETWORK_CLIENT
-#define NETWORK_CLIENT
+#ifndef SERVER
+#define SERVER
 
 #include "NetworkAgent.h"
 
-class NetworkClient : public NetworkAgent
+class Server : public NetworkAgent
 {
 public:
-	NetworkClient();
-	virtual ~NetworkClient();
+	Server();
+	virtual ~Server();
 
 	virtual void Loop();
 	virtual void Input();
