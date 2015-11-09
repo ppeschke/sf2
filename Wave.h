@@ -7,6 +7,7 @@
 //win32developer.com
 //this code provided free, as in public domain; score!
 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <xaudio2.h>
 

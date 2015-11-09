@@ -14,8 +14,9 @@ void CloseDirectInput();
 void CloseDirect3D();
 void CloseXAudio();
 
-Client::Client() : NetworkAgent()
+Client::Client() : NetworkAgent(), client("127.0.0.1")
 {
+	client.Knock();
 }
 
 Client::~Client()

@@ -1,8 +1,7 @@
 #ifndef STREAMINGWAVE_H
 #define STREAMINGWAVE_H
 
-#include <windows.h>
-#include <xaudio2.h>
+#define WIN32_LEAN_AND_MEAN
 #include "WaveInfo.h"
 
 #define STREAMINGWAVE_BUFFER_SIZE 65536	//should always be a power of 2

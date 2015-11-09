@@ -18,7 +18,7 @@ NetworkAgent* agent;	//the network agent will contain the game now
 // Starting Point
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	if(strcmp("Server", lpCmdLine) != 0)
+	if(strcmp("Server", lpCmdLine) == 0)
 		agent = new Server();
 	else
 		agent = new Client();

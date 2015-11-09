@@ -2,12 +2,15 @@
 #define SERVER
 
 #include "NetworkAgent.h"
+#include "NetworkServer.h"
 
 class Server : public NetworkAgent
 {
 public:
 	Server();
 	virtual ~Server();
+
+	NetworkServer server;
 
 	virtual void Loop();
 	virtual void Input();
