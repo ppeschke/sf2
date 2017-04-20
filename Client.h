@@ -12,7 +12,6 @@ public:
 
 	NetworkClient client;
 
-	virtual void Loop();
 	virtual void Input();
 	virtual void Output();
 	virtual void Setup(HINSTANCE hInstance);

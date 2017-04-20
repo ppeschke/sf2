@@ -12,7 +12,6 @@ public:
 
 	NetworkServer server;
 
-	virtual void Loop();
 	virtual void Input();
 	virtual void Output();
 	virtual void Setup(HINSTANCE hInstance);

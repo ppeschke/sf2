@@ -9,7 +9,7 @@ public:
 	NetworkAgent();
 	virtual ~NetworkAgent();
 
-	virtual void Loop() = 0;
+	void Loop();
 	virtual void Input() = 0;
 	virtual void Output() = 0;
 	virtual void Setup(HINSTANCE hInstance);

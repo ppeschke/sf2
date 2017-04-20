@@ -10,10 +10,6 @@ Server::~Server()
 {
 }
 
-void Server::Loop()
-{
-}
-
 void Server::Input()
 {
 }
